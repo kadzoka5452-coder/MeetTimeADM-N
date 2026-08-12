@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr"> 
+<html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -19,7 +19,7 @@ input:focus{border-color:#dd2a7b;box-shadow:0 0 0 3px #dd2a7b12}
 .btn{border:0;border-radius:10px;padding:13px 16px;cursor:pointer;font-weight:800}
 .primary{width:100%;color:#fff;background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);margin-top:14px}
 .error{color:#c51f61;font-size:13px;margin-top:10px;display:none}
-.dashboard{display:none} 
+.dashboard{display:none}
 header{background:#fff;border-bottom:1px solid #e7e7e7;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
 header h1{font-size:23px}
 .logout{background:#171717;color:#fff}
@@ -32,7 +32,7 @@ main{max-width:1250px;margin:auto;padding:35px 20px}
 .stat{background:#fff;border:1px solid #e7e7e7;border-radius:16px;padding:20px}
 .stat span{color:#777;font-size:12px}.stat b{display:block;font-size:28px;margin-top:5px}
 .table-wrap{overflow:auto;background:#fff;border:1px solid #e7e7e7;border-radius:18px}
-table{width:100%;border-collapse:collapse;min-width:900px}
+table{width:100%;border-collapse:collapse;min-width:1000px}
 th,td{text-align:left;padding:15px;border-bottom:1px solid #eee;font-size:13px;vertical-align:top}
 th{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#777;background:#fafafa}
 .reason{max-width:260px;color:#555}
@@ -79,7 +79,7 @@ th{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#777;backgr
   <div class="table-wrap">
     <table>
       <thead><tr>
-        <th>Sıra</th><th>Ad Soyad</th><th>Gün</th><th>Saat</th>
+        <th>Sıra</th><th>Kiminle?</th><th>Ad Soyad</th><th>Gün</th><th>Saat</th>
         <th>Buluşma nedeni</th><th>İletişim</th><th>Tarih</th><th>Durum</th>
       </tr></thead>
       <tbody id="rows"><tr><td colspan="8" class="empty">Başvurular yükleniyor...</td></tr></tbody>
@@ -131,7 +131,7 @@ async function loadApplications(){
   notice.style.display="none";
   rows.innerHTML='<tr><td colspan="8" class="empty">Başvurular yükleniyor...</td></tr>';
   try{
-    const response=await fetch(API_URL+"?action=applications");
+    const response=await fetch(API_URL+"?action=applications",{headers:{"X-Admin-Password":"sex"}});
     const data=await response.json();
 
     if(!data.success) throw new Error(data.message||"Başvurular alınamadı.");
@@ -158,6 +158,7 @@ async function loadApplications(){
     rows.innerHTML=apps.map((a,i)=>`
       <tr>
         <td><strong>${escapeHtml(String(a.id ?? i+1).padStart(3,"0"))}</strong></td>
+        <td><span class="status">${escapeHtml(a.person || a.withWhom || "—")}</span></td>
         <td><strong>${escapeHtml(a.name)}</strong></td>
         <td>${escapeHtml(a.day)}</td>
         <td>${escapeHtml(a.time)}</td>
