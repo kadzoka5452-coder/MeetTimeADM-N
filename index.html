@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>MeetTime Yönetim</title>
 
 <style>
@@ -32,28 +31,19 @@ button,input,select{
   padding:20px
 }
 
-.login-box,
-.panel{
+.login-box{
+  width:min(390px,100%);
+  padding:34px;
   background:#fff;
   border:1px solid #e6e6e6;
   border-radius:22px;
   box-shadow:0 20px 60px #0000000d
 }
 
-.login-box{
-  width:min(390px,100%);
-  padding:34px
-}
-
 .logo{
   font-size:28px;
   font-weight:900;
-  background:linear-gradient(
-    45deg,
-    #f58529,
-    #dd2a7b,
-    #8134af
-  );
+  background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);
   -webkit-background-clip:text;
   color:transparent
 }
@@ -96,12 +86,7 @@ select:focus{
 .primary{
   width:100%;
   color:#fff;
-  background:linear-gradient(
-    45deg,
-    #f58529,
-    #dd2a7b,
-    #8134af
-  );
+  background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);
   margin-top:14px
 }
 
@@ -206,8 +191,7 @@ table{
   min-width:1000px
 }
 
-th,
-td{
+th,td{
   text-align:left;
   padding:15px;
   border-bottom:1px solid #eee;
@@ -255,7 +239,7 @@ th{
   color:#b42318
 }
 
-/* BUTTONS */
+/* APPLICATION BUTTONS */
 .row-actions{
   display:flex;
   gap:6px;
@@ -346,11 +330,6 @@ th{
   word-break:break-word
 }
 
-.chat-msg.mine{
-  align-self:flex-end;
-  background:#eadcff
-}
-
 .chat-name{
   font-size:11px;
   font-weight:800;
@@ -360,8 +339,30 @@ th{
 
 .chat-time{
   font-size:9px;
-  color:#999;
-  margin-top:4px
+  color:#999
+}
+
+.chat-message-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:5px
+}
+
+.chat-delete{
+  border:0;
+  background:transparent;
+  color:#b42318;
+  font-size:10px;
+  cursor:pointer;
+  font-weight:800;
+  padding:3px 6px;
+  border-radius:5px
+}
+
+.chat-delete:hover{
+  background:#fff0ef
 }
 
 .chat-form{
@@ -439,6 +440,10 @@ th{
   .chat-form button{
     min-height:45px
   }
+
+  .chat-msg{
+    max-width:90%
+  }
 }
 </style>
 
@@ -497,8 +502,8 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
 
 <!-- DASHBOARD -->
 <section
-  class="dashboard"
-  id="dashboard"
+class="dashboard"
+id="dashboard"
 >
 
 <header>
@@ -511,8 +516,8 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
   </h1>
 
   <button
-    class="btn logout"
-    id="logout"
+  class="btn logout"
+  id="logout"
   >
     Çıkış
   </button>
@@ -522,7 +527,6 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
 
 <main>
 
-  <!-- TOP -->
   <div class="top">
 
     <div>
@@ -532,8 +536,8 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
       </h2>
 
       <p
-        class="muted"
-        style="margin:4px 0 0"
+      class="muted"
+      style="margin:4px 0 0"
       >
         MeetTime başvuruları
       </p>
@@ -543,8 +547,8 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
     <div class="actions">
 
       <button
-        class="btn refresh"
-        id="refresh"
+      class="btn refresh"
+      id="refresh"
       >
         ↻ Yenile
       </button>
@@ -554,10 +558,9 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
   </div>
 
 
-  <!-- NOTICE -->
   <div
-    class="notice"
-    id="notice"
+  class="notice"
+  id="notice"
   ></div>
 
 
@@ -605,7 +608,7 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
   </div>
 
 
-  <!-- TABLE -->
+  <!-- APPLICATION TABLE -->
   <div class="table-wrap">
 
     <table>
@@ -613,7 +616,6 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
       <thead>
 
         <tr>
-
           <th>Sıra</th>
           <th>Kiminle?</th>
           <th>Ad Soyad</th>
@@ -624,21 +626,20 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
           <th>Tarih</th>
           <th>Durum</th>
           <th>İşlem</th>
-
         </tr>
 
       </thead>
+
 
       <tbody id="rows">
 
         <tr>
 
           <td
-            colspan="10"
-            class="empty"
+          colspan="10"
+          class="empty"
           >
             Başvurular yükleniyor...
-
           </td>
 
         </tr>
@@ -650,7 +651,7 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
   </div>
 
 
-  <!-- ORTAK SOHBET -->
+  <!-- CHAT -->
   <section class="chat-panel">
 
     <h3>
@@ -664,8 +665,8 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
 
 
     <div
-      id="chatMessages"
-      class="chat-messages"
+    id="chatMessages"
+    class="chat-messages"
     >
 
       <div class="chat-empty">
@@ -676,13 +677,13 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
 
 
     <form
-      id="chatForm"
-      class="chat-form"
+    id="chatForm"
+    class="chat-form"
     >
 
       <select
-        id="chatName"
-        required
+      id="chatName"
+      required
       >
 
         <option value="">
@@ -701,16 +702,18 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
 
 
       <input
-        id="chatText"
-        type="text"
-        maxlength="500"
-        placeholder="Mesaj yaz..."
-        autocomplete="off"
-        required
+      id="chatText"
+      type="text"
+      maxlength="500"
+      placeholder="Mesaj yaz..."
+      autocomplete="off"
+      required
       >
 
 
-      <button type="submit">
+      <button
+      type="submit"
+      >
         Gönder
       </button>
 
@@ -732,7 +735,9 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
 const ADMIN_PASSWORD = "sex";
 
 const API_URL =
-  "https://meetime-api.kadzoka5452.workers.dev";
+"https://meetime-api.kadzoka5452.workers.dev";
+
+const CHAT_API = API_URL;
 
 
 /* =====================================================
@@ -740,32 +745,29 @@ const API_URL =
 ===================================================== */
 
 const login =
-  document.getElementById("login");
+document.getElementById("login");
 
 const dashboard =
-  document.getElementById("dashboard");
+document.getElementById("dashboard");
 
 const password =
-  document.getElementById("password");
+document.getElementById("password");
 
 const loginBtn =
-  document.getElementById("loginBtn");
+document.getElementById("loginBtn");
 
 const loginError =
-  document.getElementById("loginError");
+document.getElementById("loginError");
 
 const rows =
-  document.getElementById("rows");
+document.getElementById("rows");
 
 const notice =
-  document.getElementById("notice");
-
-const CHAT_API =
-  API_URL;
+document.getElementById("notice");
 
 
 /* =====================================================
-   HTML GÜVENLİK
+   ESCAPE HTML
 ===================================================== */
 
 function escapeHtml(v){
@@ -796,9 +798,9 @@ function escapeHtml(v){
 
 function showDashboard(){
 
-  login.style.display = "none";
+  login.style.display="none";
 
-  dashboard.style.display = "block";
+  dashboard.style.display="block";
 
   loadApplications();
 
@@ -809,16 +811,16 @@ function showDashboard(){
 
 function showError(msg){
 
-  loginError.textContent = msg;
+  loginError.textContent=msg;
 
-  loginError.style.display = "block";
+  loginError.style.display="block";
 
 }
 
 
-loginBtn.onclick = function(){
+loginBtn.onclick=function(){
 
-  if(password.value === ADMIN_PASSWORD){
+  if(password.value===ADMIN_PASSWORD){
 
     sessionStorage.setItem(
       "meet_admin",
@@ -829,7 +831,9 @@ loginBtn.onclick = function(){
 
   }else{
 
-    showError("Şifre yanlış.");
+    showError(
+      "Şifre yanlış."
+    );
 
   }
 
@@ -837,75 +841,72 @@ loginBtn.onclick = function(){
 
 
 password.addEventListener(
-  "keydown",
-  function(e){
+"keydown",
+function(e){
 
-    if(e.key === "Enter"){
-
-      loginBtn.click();
-
-    }
-
+  if(e.key==="Enter"){
+    loginBtn.click();
   }
-);
+
+});
 
 
 document
-  .getElementById("logout")
-  .onclick = function(){
+.getElementById("logout")
+.onclick=function(){
 
-    sessionStorage.removeItem(
-      "meet_admin"
-    );
+  sessionStorage.removeItem(
+    "meet_admin"
+  );
 
-    location.reload();
+  location.reload();
 
-  };
+};
 
 
 document
-  .getElementById("refresh")
-  .onclick = function(){
+.getElementById("refresh")
+.onclick=function(){
 
-    loadApplications();
+  loadApplications();
 
-    loadChat();
+  loadChat();
 
-  };
+};
 
 
 /* =====================================================
-   BAŞVURULARI GETİR
+   BAŞVURULAR
 ===================================================== */
 
 async function loadApplications(){
 
-  notice.style.display = "none";
+  notice.style.display="none";
 
-  rows.innerHTML =
-    '<tr>' +
-    '<td colspan="10" class="empty">' +
-    'Başvurular yükleniyor...' +
-    '</td>' +
-    '</tr>';
+  rows.innerHTML=
+  '<tr>' +
+  '<td colspan="10" class="empty">' +
+  'Başvurular yükleniyor...' +
+  '</td>' +
+  '</tr>';
 
 
   try{
 
     const response =
-      await fetch(
-        API_URL + "?action=applications",
-        {
-          headers:{
-            "X-Admin-Password":
-              ADMIN_PASSWORD
-          }
+    await fetch(
+      API_URL+"?action=applications",
+      {
+        headers:{
+          "X-Admin-Password":
+          ADMIN_PASSWORD
         }
-      );
+      }
+    );
 
 
     const data =
-      await response.json();
+    await response.json();
 
 
     if(!data.success){
@@ -919,68 +920,72 @@ async function loadApplications(){
 
 
     const apps =
-      data.applications || [];
+    data.applications || [];
 
 
     document.getElementById(
       "total"
-    ).textContent =
-      apps.length;
+    ).textContent=
+    apps.length;
 
 
     const todayKey =
-      new Date().toLocaleDateString(
-        "tr-TR"
-      );
+    new Date().toLocaleDateString(
+      "tr-TR"
+    );
 
 
     const todayApps =
-      apps.filter(function(a){
+    apps.filter(function(a){
 
-        const d =
-          new Date(
-            Number(a.created_at)
-          );
+      const d =
+      new Date(
+        Number(a.created_at)
+      );
 
-        return (
-          d.toLocaleDateString(
-            "tr-TR"
-          ) === todayKey
-        );
+      return (
+        d.toLocaleDateString(
+          "tr-TR"
+        ) === todayKey
+      );
 
-      });
+    });
 
 
     document.getElementById(
       "today"
-    ).textContent =
-      todayApps.length;
+    ).textContent=
+    todayApps.length;
 
 
     document.getElementById(
       "latest"
-    ).textContent =
-      apps.length
-      ? new Date(
-          Number(apps[0].created_at)
-        ).toLocaleTimeString(
-          "tr-TR",
-          {
-            hour:"2-digit",
-            minute:"2-digit"
-          }
-        )
-      : "—";
+    ).textContent=
+    apps.length
+    ?
+    new Date(
+      Number(
+        apps[0].created_at
+      )
+    ).toLocaleTimeString(
+      "tr-TR",
+      {
+        hour:"2-digit",
+        minute:"2-digit"
+      }
+    )
+    :
+    "—";
 
 
     if(!apps.length){
 
-      rows.innerHTML =
-        '<tr>' +
-        '<td colspan="10" class="empty">' +
-        'Henüz başvuru yok.' +
-        '</td>' +
-        '</tr>';
+      rows.innerHTML=
+      '<tr>' +
+      '<td colspan="10" class="empty">' +
+      'Henüz başvuru yok.' +
+      '</td>' +
+      '</tr>';
 
       return;
 
@@ -988,153 +993,152 @@ async function loadApplications(){
 
 
     rows.innerHTML =
-      apps.map(function(a,i){
+    apps.map(function(a,i){
 
-        return `
+      return `
 
-        <tr>
+      <tr>
 
-          <td>
-            <strong>
-              ${escapeHtml(
-                String(
-                  a.id ?? i + 1
-                ).padStart(3,"0")
-              )}
-            </strong>
-          </td>
-
-
-          <td>
-
-            <span class="status">
-
-              ${escapeHtml(
-                a.person ||
-                a.withWhom ||
-                "—"
-              )}
-
-            </span>
-
-          </td>
-
-
-          <td>
-
-            <strong>
-              ${escapeHtml(
-                a.name || "—"
-              )}
-            </strong>
-
-          </td>
-
-
-          <td>
+        <td>
+          <strong>
             ${escapeHtml(
-              a.day || "—"
+              String(
+                a.id ?? i+1
+              ).padStart(3,"0")
             )}
-          </td>
+          </strong>
+        </td>
 
 
-          <td>
-            ${escapeHtml(
-              a.time || "—"
-            )}
-          </td>
+        <td>
 
-
-          <td class="reason">
+          <span class="status">
 
             ${escapeHtml(
-              a.reason || "—"
+              a.person ||
+              a.withWhom ||
+              "—"
             )}
 
-          </td>
+          </span>
+
+        </td>
 
 
-          <td>
+        <td>
+
+          <strong>
+            ${escapeHtml(
+              a.name ||
+              "—"
+            )}
+          </strong>
+
+        </td>
+
+
+        <td>
+          ${escapeHtml(
+            a.day ||
+            "—"
+          )}
+        </td>
+
+
+        <td>
+          ${escapeHtml(
+            a.time ||
+            "—"
+          )}
+        </td>
+
+
+        <td class="reason">
+          ${escapeHtml(
+            a.reason ||
+            "—"
+          )}
+        </td>
+
+
+        <td>
+          ${escapeHtml(
+            a.contact ||
+            "—"
+          )}
+        </td>
+
+
+        <td>
+          ${formatDate(
+            a.created_at
+          )}
+        </td>
+
+
+        <td>
+
+          <span
+          class="status ${statusClass(
+            a.status
+          )}"
+          >
 
             ${escapeHtml(
-              a.contact || "—"
-            )}
-
-          </td>
-
-
-          <td>
-
-            ${formatDate(
-              a.created_at
-            )}
-
-          </td>
-
-
-          <td>
-
-            <span
-              class="status ${statusClass(
+              statusText(
                 a.status
-              )}"
+              )
+            )}
+
+          </span>
+
+        </td>
+
+
+        <td>
+
+          <div class="row-actions">
+
+            <button
+            class="small-btn approve"
+            onclick="changeStatus(
+              ${Number(a.id)},
+              'approved'
+            )"
             >
-
-              ${escapeHtml(
-                statusText(
-                  a.status
-                )
-              )}
-
-            </span>
-
-          </td>
+              Onayla
+            </button>
 
 
-          <td>
-
-            <div class="row-actions">
-
-              <button
-                class="small-btn approve"
-                onclick="changeStatus(
-                  ${Number(a.id)},
-                  'approved'
-                )"
-              >
-                Onayla
-              </button>
+            <button
+            class="small-btn reject"
+            onclick="changeStatus(
+              ${Number(a.id)},
+              'rejected'
+            )"
+            >
+              Reddet
+            </button>
 
 
-              <button
-                class="small-btn reject"
-                onclick="changeStatus(
-                  ${Number(a.id)},
-                  'rejected'
-                )"
-              >
-                Reddet
-              </button>
+            <button
+            class="small-btn delete"
+            onclick="deleteApplication(
+              ${Number(a.id)}
+            )"
+            >
+              Sil
+            </button>
 
+          </div>
 
-              <button
-                class="small-btn delete"
-                onclick="deleteApplication(
-                  ${Number(a.id)}
-                )"
-              >
-                Sil
-              </button>
+        </td>
 
-            </div>
+      </tr>
 
-          </td>
+      `;
 
-        </tr>
-
-        `;
-
-      }).join("");
+    }).join("");
 
 
   }catch(err){
@@ -1145,21 +1149,20 @@ async function loadApplications(){
     );
 
 
-    rows.innerHTML =
-      '<tr>' +
-      '<td colspan="10" class="empty">' +
-      'Başvurular alınamadı.' +
-      '</td>' +
-      '</tr>';
+    rows.innerHTML=
+    '<tr>' +
+    '<td colspan="10" class="empty">' +
+    'Başvurular alınamadı.' +
+    '</td>' +
+    '</tr>';
 
 
     notice.textContent =
-      err.message +
-      " Worker tarafında yönetim API'sini de açmamız gerekiyor.";
+    err.message;
 
 
-    notice.style.display =
-      "block";
+    notice.style.display=
+    "block";
 
   }
 
@@ -1172,10 +1175,10 @@ async function loadApplications(){
 
 function statusText(v){
 
-  if(v === "approved")
+  if(v==="approved")
     return "Onaylandı";
 
-  if(v === "rejected")
+  if(v==="rejected")
     return "Reddedildi";
 
   return "İnceleniyor";
@@ -1185,10 +1188,10 @@ function statusText(v){
 
 function statusClass(v){
 
-  if(v === "approved")
+  if(v==="approved")
     return "approved";
 
-  if(v === "rejected")
+  if(v==="rejected")
     return "rejected";
 
   return "";
@@ -1201,37 +1204,37 @@ function statusClass(v){
 ===================================================== */
 
 async function adminAction(
-  action,
-  id
+action,
+id
 ){
 
   const response =
-    await fetch(
-      API_URL +
-      "?action=" +
-      encodeURIComponent(action),
-      {
+  await fetch(
+    API_URL+
+    "?action="+
+    encodeURIComponent(action),
+    {
 
-        method:"POST",
+      method:"POST",
 
-        headers:{
-          "Content-Type":
-            "application/json",
+      headers:{
+        "Content-Type":
+        "application/json",
 
-          "X-Admin-Password":
-            ADMIN_PASSWORD
-        },
+        "X-Admin-Password":
+        ADMIN_PASSWORD
+      },
 
-        body:JSON.stringify({
-          id:id
-        })
+      body:JSON.stringify({
+        id:id
+      })
 
-      }
-    );
+    }
+  );
 
 
   const data =
-    await response.json();
+  await response.json();
 
 
   if(!data.success){
@@ -1250,27 +1253,27 @@ async function adminAction(
 
 
 /* =====================================================
-   DURUM DEĞİŞTİR
+   ONAY / RED
 ===================================================== */
 
 async function changeStatus(
-  id,
-  status
+id,
+status
 ){
 
   const label =
-    status === "approved"
-    ? "onaylamak"
-    : "reddetmek";
+  status==="approved"
+  ?
+  "onaylamak"
+  :
+  "reddetmek";
 
 
-  if(
-    !confirm(
-      "Bu başvuruyu " +
-      label +
-      " istediğine emin misin?"
-    )
-  ){
+  if(!confirm(
+    "Bu başvuruyu "+
+    label+
+    " istediğine emin misin?"
+  )){
 
     return;
 
@@ -1280,9 +1283,11 @@ async function changeStatus(
   try{
 
     await adminAction(
-      status === "approved"
-      ? "approve"
-      : "reject",
+      status==="approved"
+      ?
+      "approve"
+      :
+      "reject",
       id
     );
 
@@ -1302,18 +1307,16 @@ async function changeStatus(
 
 
 /* =====================================================
-   SİL
+   BAŞVURU SİL
 ===================================================== */
 
 async function deleteApplication(
-  id
+id
 ){
 
-  if(
-    !confirm(
-      "Bu başvuruyu kalıcı olarak silmek istediğine emin misin?"
-    )
-  ){
+  if(!confirm(
+    "Bu başvuruyu kalıcı olarak silmek istediğine emin misin?"
+  )){
 
     return;
 
@@ -1349,9 +1352,9 @@ async function deleteApplication(
 function formatDate(v){
 
   const d =
-    new Date(
-      Number(v)
-    );
+  new Date(
+    Number(v)
+  );
 
 
   if(isNaN(d))
@@ -1370,15 +1373,15 @@ function formatDate(v){
 
 
 /* =====================================================
-   CHAT
+   CHAT MESAJLARINI GETİR
 ===================================================== */
 
 async function loadChat(){
 
   const box =
-    document.getElementById(
-      "chatMessages"
-    );
+  document.getElementById(
+    "chatMessages"
+  );
 
 
   if(!box)
@@ -1388,20 +1391,20 @@ async function loadChat(){
   try{
 
     const res =
-      await fetch(
-        CHAT_API +
-        "?action=chat",
-        {
-          headers:{
-            "X-Admin-Password":
-              ADMIN_PASSWORD
-          }
+    await fetch(
+      CHAT_API+
+      "?action=chat",
+      {
+        headers:{
+          "X-Admin-Password":
+          ADMIN_PASSWORD
         }
-      );
+      }
+    );
 
 
     const data =
-      await res.json();
+    await res.json();
 
 
     if(!data.success){
@@ -1415,15 +1418,15 @@ async function loadChat(){
 
 
     const messages =
-      data.messages || [];
+    data.messages || [];
 
 
     if(!messages.length){
 
-      box.innerHTML =
-        '<div class="chat-empty">' +
-        'Henüz mesaj yok.' +
-        '</div>';
+      box.innerHTML=
+      '<div class="chat-empty">' +
+      'Henüz mesaj yok.' +
+      '</div>';
 
       return;
 
@@ -1431,49 +1434,64 @@ async function loadChat(){
 
 
     box.innerHTML =
-      messages.map(function(m){
+    messages.map(function(m){
 
-        return `
+      return `
 
-          <div class="chat-msg">
+      <div class="chat-msg">
 
-            <div class="chat-name">
+        <div class="chat-name">
 
-              ${escapeHtml(
-                m.sender ||
-                "Bilinmiyor"
-              )}
+          ${escapeHtml(
+            m.sender ||
+            "Bilinmiyor"
+          )}
 
-            </div>
-
-
-            <div>
-
-              ${escapeHtml(
-                m.message ||
-                ""
-              )}
-
-            </div>
+        </div>
 
 
-            <div class="chat-time">
+        <div>
 
-              ${formatDate(
-                m.created_at
-              )}
+          ${escapeHtml(
+            m.message ||
+            ""
+          )}
 
-            </div>
+        </div>
+
+
+        <div class="chat-message-footer">
+
+          <div class="chat-time">
+
+            ${formatDate(
+              m.created_at
+            )}
 
           </div>
 
-        `;
 
-      }).join("");
+          <button
+          type="button"
+          class="chat-delete"
+          onclick="deleteChatMessage(
+            ${Number(m.id)}
+          )"
+          >
+            🗑️ Sil
+          </button>
+
+        </div>
+
+      </div>
+
+      `;
+
+    }).join("");
 
 
     box.scrollTop =
-      box.scrollHeight;
+    box.scrollHeight;
 
 
   }catch(err){
@@ -1484,12 +1502,92 @@ async function loadChat(){
     );
 
 
-    box.innerHTML =
-      '<div class="chat-empty">' +
-      escapeHtml(
-        err.message
-      ) +
-      '</div>';
+    box.innerHTML=
+    '<div class="chat-empty">' +
+    escapeHtml(
+      err.message
+    ) +
+    '</div>';
+
+  }
+
+}
+
+
+/* =====================================================
+   CHAT MESAJ SİL
+===================================================== */
+
+async function deleteChatMessage(
+id
+){
+
+  if(!confirm(
+    "Bu mesajı silmek istediğine emin misin?"
+  )){
+
+    return;
+
+  }
+
+
+  try{
+
+    const res =
+    await fetch(
+      CHAT_API+
+      "?action=delete-chat",
+      {
+
+        method:"POST",
+
+        headers:{
+
+          "Content-Type":
+          "application/json",
+
+          "X-Admin-Password":
+          ADMIN_PASSWORD
+
+        },
+
+        body:JSON.stringify({
+          id:id
+        })
+
+      }
+    );
+
+
+    const data =
+    await res.json();
+
+
+    if(!data.success){
+
+      throw new Error(
+        data.message ||
+        "Mesaj silinemedi."
+      );
+
+    }
+
+
+    await loadChat();
+
+
+  }catch(err){
+
+    console.error(
+      "Mesaj silme hatası:",
+      err
+    );
+
+
+    alert(
+      "Mesaj silinemedi: "+
+      err.message
+    );
 
   }
 
@@ -1501,146 +1599,145 @@ async function loadChat(){
 ===================================================== */
 
 document
-  .getElementById("chatForm")
-  .addEventListener(
-    "submit",
-    async function(e){
+.getElementById("chatForm")
+.addEventListener(
+"submit",
+async function(e){
 
-      e.preventDefault();
+  e.preventDefault();
 
-      e.stopPropagation();
-
-
-      const sender =
-        document.getElementById(
-          "chatName"
-        ).value;
+  e.stopPropagation();
 
 
-      const input =
-        document.getElementById(
-          "chatText"
-        );
+  const sender =
+  document.getElementById(
+    "chatName"
+  ).value;
 
 
-      const message =
-        input.value.trim();
-
-
-      if(!sender){
-
-        alert(
-          "Önce kim olduğunu seç."
-        );
-
-        return;
-
-      }
-
-
-      if(!message)
-        return;
-
-
-      const button =
-        this.querySelector(
-          "button"
-        );
-
-
-      button.disabled =
-        true;
-
-
-      button.textContent =
-        "Gönderiliyor...";
-
-
-      try{
-
-        const res =
-          await fetch(
-            CHAT_API +
-            "?action=chat",
-            {
-
-              method:"POST",
-
-              headers:{
-
-                "Content-Type":
-                  "application/json",
-
-                "X-Admin-Password":
-                  ADMIN_PASSWORD
-
-              },
-
-              body:JSON.stringify({
-
-                sender:sender,
-
-                message:message
-
-              })
-
-            }
-          );
-
-
-        const data =
-          await res.json();
-
-
-        if(!data.success){
-
-          throw new Error(
-            data.message ||
-            "Mesaj gönderilemedi."
-          );
-
-        }
-
-
-        input.value = "";
-
-
-        await loadChat();
-
-
-        input.focus();
-
-
-      }catch(err){
-
-        console.error(
-          "Mesaj gönderme hatası:",
-          err
-        );
-
-
-        alert(
-          "Mesaj gönderilemedi: " +
-          err.message
-        );
-
-
-      }finally{
-
-        button.disabled =
-          false;
-
-        button.textContent =
-          "Gönder";
-
-      }
-
-    }
+  const input =
+  document.getElementById(
+    "chatText"
   );
 
 
+  const message =
+  input.value.trim();
+
+
+  if(!sender){
+
+    alert(
+      "Önce kim olduğunu seç."
+    );
+
+    return;
+
+  }
+
+
+  if(!message)
+    return;
+
+
+  const button =
+  this.querySelector(
+    "button"
+  );
+
+
+  button.disabled=
+  true;
+
+
+  button.textContent=
+  "Gönderiliyor...";
+
+
+  try{
+
+    const res =
+    await fetch(
+      CHAT_API+
+      "?action=chat",
+      {
+
+        method:"POST",
+
+        headers:{
+
+          "Content-Type":
+          "application/json",
+
+          "X-Admin-Password":
+          ADMIN_PASSWORD
+
+        },
+
+        body:JSON.stringify({
+
+          sender:sender,
+
+          message:message
+
+        })
+
+      }
+    );
+
+
+    const data =
+    await res.json();
+
+
+    if(!data.success){
+
+      throw new Error(
+        data.message ||
+        "Mesaj gönderilemedi."
+      );
+
+    }
+
+
+    input.value="";
+
+
+    await loadChat();
+
+
+    input.focus();
+
+
+  }catch(err){
+
+    console.error(
+      "Mesaj gönderme hatası:",
+      err
+    );
+
+
+    alert(
+      "Mesaj gönderilemedi: "+
+      err.message
+    );
+
+
+  }finally{
+
+    button.disabled=
+    false;
+
+    button.textContent=
+    "Gönder";
+
+  }
+
+});
+
+
 /* =====================================================
-   OTOMATİK CHAT YENİLEME
+   OTOMATİK SOHBET YENİLEME
 ===================================================== */
 
 setInterval(
@@ -1650,13 +1747,13 @@ setInterval(
 
 
 /* =====================================================
-   OTOMATİK LOGIN
+   SESSION
 ===================================================== */
 
 if(
-  sessionStorage.getItem(
-    "meet_admin"
-  ) === "1"
+sessionStorage.getItem(
+  "meet_admin"
+)==="1"
 ){
 
   showDashboard();
