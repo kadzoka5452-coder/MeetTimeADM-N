@@ -316,13 +316,19 @@ th{
   margin-top:6px
 }
 .chat-file img{
-  max-width:220px;
-  max-height:180px;
+  max-width:180px;
+  max-height:140px;
   border-radius:10px;
   display:block;
-  margin-top:4px
+  margin-top:4px;
+  cursor:pointer;
+  object-fit:cover;
+  border:1px solid #ddd
 }
-.chat-file a{
+.chat-file img:hover{
+  opacity:.9
+}
+.chat-file .file-link{
   display:inline-flex;
   align-items:center;
   gap:6px;
@@ -334,9 +340,10 @@ th{
   font-size:12px;
   font-weight:700;
   color:#171717;
-  text-decoration:none
+  text-decoration:none;
+  cursor:pointer
 }
-.chat-file a:hover{
+.chat-file .file-link:hover{
   background:#f7f7f7
 }
 .chat-form{
@@ -407,6 +414,76 @@ th{
   padding:80px 10px 0;
   font-size:13px
 }
+/* MODAL / LIGHTBOX */
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+  padding:20px
+}
+.modal-overlay.open{
+  display:flex
+}
+.modal-box{
+  background:#fff;
+  border-radius:18px;
+  max-width:min(520px,95vw);
+  max-height:90vh;
+  overflow:auto;
+  padding:16px;
+  position:relative;
+  box-shadow:0 20px 60px rgba(0,0,0,.3)
+}
+.modal-box img{
+  width:100%;
+  max-height:70vh;
+  object-fit:contain;
+  border-radius:12px;
+  display:block
+}
+.modal-close{
+  position:absolute;
+  top:10px;
+  right:12px;
+  border:0;
+  background:#171717;
+  color:#fff;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  font-size:18px;
+  cursor:pointer;
+  line-height:1;
+  display:grid;
+  place-items:center
+}
+.modal-title{
+  font-size:13px;
+  font-weight:800;
+  margin-bottom:10px;
+  padding-right:40px;
+  word-break:break-all
+}
+.modal-actions{
+  margin-top:12px;
+  display:flex;
+  gap:8px
+}
+.modal-actions a{
+  flex:1;
+  text-align:center;
+  padding:10px;
+  background:#7b3fb5;
+  color:#fff;
+  border-radius:10px;
+  font-weight:800;
+  text-decoration:none;
+  font-size:13px
+}
 /* MOBILE */
 @media(max-width:700px){
   .stats{
@@ -473,51 +550,28 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
     </div>
   </div>
   <div class="notice" id="notice"></div>
-  <!-- STATS -->
   <div class="stats">
-    <div class="stat">
-      <span>Toplam başvuru</span>
-      <b id="total">0</b>
-    </div>
-    <div class="stat">
-      <span>Bugünkü başvuru</span>
-      <b id="today">0</b>
-    </div>
-    <div class="stat">
-      <span>Son başvuru</span>
-      <b id="latest">—</b>
-    </div>
+    <div class="stat"><span>Toplam başvuru</span><b id="total">0</b></div>
+    <div class="stat"><span>Bugünkü başvuru</span><b id="today">0</b></div>
+    <div class="stat"><span>Son başvuru</span><b id="latest">—</b></div>
   </div>
-  <!-- APPLICATION TABLE -->
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>Sıra</th>
-          <th>Kiminle?</th>
-          <th>Ad Soyad</th>
-          <th>Gün</th>
-          <th>Saat</th>
-          <th>Buluşma nedeni</th>
-          <th>İletişim</th>
-          <th>Tarih</th>
-          <th>Durum</th>
-          <th>İşlem</th>
+          <th>Sıra</th><th>Kiminle?</th><th>Ad Soyad</th><th>Gün</th><th>Saat</th>
+          <th>Buluşma nedeni</th><th>İletişim</th><th>Tarih</th><th>Durum</th><th>İşlem</th>
         </tr>
       </thead>
       <tbody id="rows">
-        <tr>
-          <td colspan="10" class="empty">Başvurular yükleniyor...</td>
-        </tr>
+        <tr><td colspan="10" class="empty">Başvurular yükleniyor...</td></tr>
       </tbody>
     </table>
   </div>
   <!-- CHAT -->
   <section class="chat-panel">
     <h3>💬 Ortak Sohbet</h3>
-    <p class="chat-sub">
-      Mesaj yaz veya dosya ekle (fotoğraf / belge). Max 3 MB.
-    </p>
+    <p class="chat-sub">Mesaj yaz veya dosya ekle (fotoğraf / belge). Max 3 MB.</p>
     <div id="chatMessages" class="chat-messages">
       <div class="chat-empty">Henüz mesaj yok.</div>
     </div>
@@ -538,15 +592,23 @@ href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 
   </section>
 </main>
 </section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="fileModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">×</button>
+    <div class="modal-title" id="modalTitle"></div>
+    <div id="modalContent"></div>
+    <div class="modal-actions">
+      <a id="modalDownload" href="#" target="_blank" rel="noopener">İndir / Aç</a>
+    </div>
+  </div>
+</div>
+
 <script>
-/* =====================================================
-   AYARLAR
-===================================================== */
 const ADMIN_PASSWORD = "sex";
 const API_URL = "https://meetime-api.kadzoka5452.workers.dev";
-/* =====================================================
-   ELEMENTLER
-===================================================== */
+
 const login = document.getElementById("login");
 const dashboard = document.getElementById("dashboard");
 const password = document.getElementById("password");
@@ -554,17 +616,11 @@ const loginBtn = document.getElementById("loginBtn");
 const loginError = document.getElementById("loginError");
 const rows = document.getElementById("rows");
 const notice = document.getElementById("notice");
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
+
 function escapeHtml(v){
-  return String(v ?? "").replace(/[&<>"']/g, function(m){
-    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m];
-  });
+  return String(v ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 }
-/* =====================================================
-   LOGIN
-===================================================== */
+
 function showDashboard(){
   login.style.display = "none";
   dashboard.style.display = "block";
@@ -579,13 +635,9 @@ loginBtn.onclick = function(){
   if(password.value === ADMIN_PASSWORD){
     sessionStorage.setItem("meet_admin", "1");
     showDashboard();
-  }else{
-    showError("Şifre yanlış.");
-  }
+  }else showError("Şifre yanlış.");
 };
-password.addEventListener("keydown", function(e){
-  if(e.key === "Enter") loginBtn.click();
-});
+password.addEventListener("keydown", e => { if(e.key === "Enter") loginBtn.click(); });
 document.getElementById("logout").onclick = function(){
   sessionStorage.removeItem("meet_admin");
   location.reload();
@@ -594,9 +646,7 @@ document.getElementById("refresh").onclick = function(){
   loadApplications();
   loadChat();
 };
-/* =====================================================
-   BAŞVURULAR
-===================================================== */
+
 async function loadApplications(){
   notice.style.display = "none";
   rows.innerHTML = '<tr><td colspan="10" class="empty">Başvurular yükleniyor...</td></tr>';
@@ -609,10 +659,7 @@ async function loadApplications(){
     const apps = data.applications || [];
     document.getElementById("total").textContent = apps.length;
     const todayKey = new Date().toLocaleDateString("tr-TR");
-    const todayApps = apps.filter(function(a){
-      const d = new Date(Number(a.created_at));
-      return d.toLocaleDateString("tr-TR") === todayKey;
-    });
+    const todayApps = apps.filter(a => new Date(Number(a.created_at)).toLocaleDateString("tr-TR") === todayKey);
     document.getElementById("today").textContent = todayApps.length;
     document.getElementById("latest").textContent = apps.length
       ? new Date(Number(apps[0].created_at)).toLocaleTimeString("tr-TR", { hour:"2-digit", minute:"2-digit" })
@@ -621,8 +668,7 @@ async function loadApplications(){
       rows.innerHTML = '<tr><td colspan="10" class="empty">Henüz başvuru yok.</td></tr>';
       return;
     }
-    rows.innerHTML = apps.map(function(a,i){
-      return `
+    rows.innerHTML = apps.map((a,i) => `
       <tr>
         <td><strong>${escapeHtml(String(a.id ?? i+1).padStart(3,"0"))}</strong></td>
         <td><span class="status">${escapeHtml(a.person || a.withWhom || "—")}</span></td>
@@ -640,18 +686,15 @@ async function loadApplications(){
             <button class="small-btn delete" onclick="deleteApplication(${Number(a.id)})">Sil</button>
           </div>
         </td>
-      </tr>`;
-    }).join("");
+      </tr>`).join("");
   }catch(err){
-    console.error("Başvuru hatası:", err);
+    console.error(err);
     rows.innerHTML = '<tr><td colspan="10" class="empty">Başvurular alınamadı.</td></tr>';
     notice.textContent = err.message;
     notice.style.display = "block";
   }
 }
-/* =====================================================
-   DURUM
-===================================================== */
+
 function statusText(v){
   if(v === "approved") return "Onaylandı";
   if(v === "rejected") return "Reddedildi";
@@ -662,58 +705,71 @@ function statusClass(v){
   if(v === "rejected") return "rejected";
   return "";
 }
-/* =====================================================
-   ADMIN ACTION
-===================================================== */
+
 async function adminAction(action, id){
   const response = await fetch(API_URL + "?action=" + encodeURIComponent(action), {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Admin-Password": ADMIN_PASSWORD
-    },
-    body: JSON.stringify({ id: id })
+    headers: { "Content-Type": "application/json", "X-Admin-Password": ADMIN_PASSWORD },
+    body: JSON.stringify({ id })
   });
   const data = await response.json();
   if(!data.success) throw new Error(data.message || "İşlem başarısız.");
   return data;
 }
-/* =====================================================
-   ONAY / RED
-===================================================== */
+
 async function changeStatus(id, status){
   const label = status === "approved" ? "onaylamak" : "reddetmek";
   if(!confirm("Bu başvuruyu " + label + " istediğine emin misin?")) return;
   try{
     await adminAction(status === "approved" ? "approve" : "reject", id);
     await loadApplications();
-  }catch(err){
-    alert(err.message);
-  }
+  }catch(err){ alert(err.message); }
 }
-/* =====================================================
-   BAŞVURU SİL
-===================================================== */
+
 async function deleteApplication(id){
   if(!confirm("Bu başvuruyu kalıcı olarak silmek istediğine emin misin?")) return;
   try{
     await adminAction("delete", id);
     await loadApplications();
-  }catch(err){
-    alert(err.message);
-  }
+  }catch(err){ alert(err.message); }
 }
-/* =====================================================
-   TARİH
-===================================================== */
+
 function formatDate(v){
   const d = new Date(Number(v));
   if(isNaN(d)) return "—";
   return d.toLocaleString("tr-TR", { dateStyle: "short", timeStyle: "short" });
 }
-/* =====================================================
-   CHAT MESAJLARINI GETİR
-===================================================== */
+
+/* ========== MODAL ========== */
+const modal = document.getElementById("fileModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalContent = document.getElementById("modalContent");
+const modalDownload = document.getElementById("modalDownload");
+const modalClose = document.getElementById("modalClose");
+
+function openFileModal(url, name, isImage){
+  modalTitle.textContent = name || "Dosya";
+  modalDownload.href = url;
+  if(isImage){
+    modalContent.innerHTML = `<img src="${escapeHtml(url)}" alt="${escapeHtml(name || "")}">`;
+  }else{
+    modalContent.innerHTML = `<p style="padding:20px;text-align:center;color:#555">Belge önizlemesi yok. Aşağıdan açabilirsin.</p>`;
+  }
+  modal.classList.add("open");
+}
+function closeModal(){
+  modal.classList.remove("open");
+  modalContent.innerHTML = "";
+}
+modalClose.onclick = closeModal;
+modal.onclick = function(e){
+  if(e.target === modal) closeModal();
+};
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") closeModal();
+});
+
+/* ========== CHAT ========== */
 async function loadChat(){
   const box = document.getElementById("chatMessages");
   if(!box) return;
@@ -728,15 +784,21 @@ async function loadChat(){
       box.innerHTML = '<div class="chat-empty">Henüz mesaj yok.</div>';
       return;
     }
-    box.innerHTML = messages.map(function(m){
+    box.innerHTML = messages.map(m => {
       let fileHtml = "";
       if(m.file_id){
         const fileUrl = API_URL + "?action=file&id=" + m.file_id;
         const isImage = (m.file_mime || "").startsWith("image/");
+        const name = m.file_name || "dosya";
         if(isImage){
-          fileHtml = `<div class="chat-file"><img src="${escapeHtml(fileUrl)}" alt="${escapeHtml(m.file_name || "dosya")}" loading="lazy"></div>`;
+          fileHtml = `<div class="chat-file">
+            <img src="${escapeHtml(fileUrl)}" alt="${escapeHtml(name)}" loading="lazy"
+              onclick="openFileModal('${escapeHtml(fileUrl)}','${escapeHtml(name)}',true)">
+          </div>`;
         }else{
-          fileHtml = `<div class="chat-file"><a href="${escapeHtml(fileUrl)}" target="_blank" rel="noopener">📄 ${escapeHtml(m.file_name || "Dosya")}</a></div>`;
+          fileHtml = `<div class="chat-file">
+            <span class="file-link" onclick="openFileModal('${escapeHtml(fileUrl)}','${escapeHtml(name)}',false)">📄 ${escapeHtml(name)}</span>
+          </div>`;
         }
       }
       const textHtml = m.message ? `<div>${escapeHtml(m.message)}</div>` : "";
@@ -753,68 +815,42 @@ async function loadChat(){
     }).join("");
     box.scrollTop = box.scrollHeight;
   }catch(err){
-    console.error("Sohbet yükleme hatası:", err);
+    console.error(err);
     box.innerHTML = '<div class="chat-empty">' + escapeHtml(err.message) + '</div>';
   }
 }
-/* =====================================================
-   CHAT MESAJ SİL
-===================================================== */
+
 async function deleteChatMessage(id){
   if(!confirm("Bu mesajı silmek istediğine emin misin?")) return;
   try{
     const res = await fetch(API_URL + "?action=delete-chat", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Admin-Password": ADMIN_PASSWORD
-      },
-      body: JSON.stringify({ id: id })
+      headers: { "Content-Type": "application/json", "X-Admin-Password": ADMIN_PASSWORD },
+      body: JSON.stringify({ id })
     });
     const data = await res.json();
     if(!data.success) throw new Error(data.message || "Mesaj silinemedi.");
     await loadChat();
   }catch(err){
-    console.error("Mesaj silme hatası:", err);
     alert("Mesaj silinemedi: " + err.message);
   }
 }
-/* =====================================================
-   DOSYA SEÇİNCE İSİM GÖSTER
-===================================================== */
+
 document.getElementById("chatFile").addEventListener("change", function(){
-  const nameEl = document.getElementById("fileName");
-  if(this.files[0]){
-    nameEl.textContent = this.files[0].name;
-  }else{
-    nameEl.textContent = "";
-  }
+  document.getElementById("fileName").textContent = this.files[0] ? this.files[0].name : "";
 });
-/* =====================================================
-   CHAT MESAJ / DOSYA GÖNDER
-===================================================== */
+
 document.getElementById("chatForm").addEventListener("submit", async function(e){
   e.preventDefault();
-  e.stopPropagation();
-
   const sender = document.getElementById("chatName").value;
   const input = document.getElementById("chatText");
   const fileInput = document.getElementById("chatFile");
   const message = input.value.trim();
   const file = fileInput.files[0];
 
-  if(!sender){
-    alert("Önce kim olduğunu seç.");
-    return;
-  }
-  if(!message && !file){
-    alert("Mesaj yaz veya dosya seç.");
-    return;
-  }
-  if(file && file.size > 3 * 1024 * 1024){
-    alert("Dosya 3 MB'dan büyük olamaz.");
-    return;
-  }
+  if(!sender){ alert("Önce kim olduğunu seç."); return; }
+  if(!message && !file){ alert("Mesaj yaz veya dosya seç."); return; }
+  if(file && file.size > 3 * 1024 * 1024){ alert("Dosya 3 MB'dan büyük olamaz."); return; }
 
   const button = this.querySelector("button[type='submit']");
   button.disabled = true;
@@ -828,9 +864,7 @@ document.getElementById("chatForm").addEventListener("submit", async function(e)
 
     const res = await fetch(API_URL + "?action=chat", {
       method: "POST",
-      headers: {
-        "X-Admin-Password": ADMIN_PASSWORD
-      },
+      headers: { "X-Admin-Password": ADMIN_PASSWORD },
       body: form
     });
     const data = await res.json();
@@ -842,20 +876,15 @@ document.getElementById("chatForm").addEventListener("submit", async function(e)
     await loadChat();
     input.focus();
   }catch(err){
-    console.error("Gönderme hatası:", err);
     alert("Gönderilemedi: " + err.message);
   }finally{
     button.disabled = false;
     button.textContent = "Gönder";
   }
 });
-/* =====================================================
-   OTOMATİK SOHBET YENİLEME
-===================================================== */
+
 setInterval(loadChat, 5000);
-/* =====================================================
-   SESSION
-===================================================== */
+
 if(sessionStorage.getItem("meet_admin") === "1"){
   showDashboard();
 }
