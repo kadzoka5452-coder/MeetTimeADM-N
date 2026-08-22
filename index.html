@@ -3,533 +3,2762 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MeetTime Yönetim</title>
+
+<title>MeetTime — Yönetim</title>
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23ff9d45'/%3E%3Cstop offset='50%25' stop-color='%23ff4d9d'/%3E%3Cstop offset='100%25' stop-color='%237c5cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='28' fill='%2309090f'/%3E%3Ccircle cx='50' cy='50' r='28' fill='url(%23g)'/%3E%3Ccircle cx='50' cy='50' r='10' fill='%2309090f'/%3E%3C/svg%3E">
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,Arial,sans-serif;background:#f6f6f8;color:#171717;min-height:100vh}
-button,input,select{font:inherit}
-.login{min-height:100vh;display:grid;place-items:center;padding:20px}
-.login-box{width:min(390px,100%);padding:34px;background:#fff;border:1px solid #e6e6e6;border-radius:22px;box-shadow:0 20px 60px #0000000d}
-.logo{font-size:28px;font-weight:900;background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);-webkit-background-clip:text;color:transparent}
-.muted{color:#777;font-size:14px;margin:8px 0 24px}
-label{display:block;font-size:12px;font-weight:800;margin:0 0 7px}
-input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;outline:0}
-input:focus,select:focus{border-color:#dd2a7b;box-shadow:0 0 0 3px #dd2a7b12}
-.btn{border:0;border-radius:10px;padding:13px 16px;cursor:pointer;font-weight:800}
-.primary{width:100%;color:#fff;background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);margin-top:14px}
-.error{color:#c51f61;font-size:13px;margin-top:10px;display:none}
-.dashboard{display:none}
-header{background:#fff;border-bottom:1px solid #e7e7e7;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5}
-header h1{font-size:23px}
-.logout{background:#171717;color:#fff}
-main{max-width:1250px;margin:auto;padding:35px 20px}
-.top{display:flex;justify-content:space-between;gap:15px;align-items:end;margin-bottom:22px}
-.top h2{font-size:30px}
-.actions{display:flex;gap:10px}
-.refresh{background:#fff;border:1px solid #ddd}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-.stat{background:#fff;border:1px solid #e7e7e7;border-radius:16px;padding:20px}
-.stat span{color:#777;font-size:12px}
-.stat b{display:block;font-size:28px;margin-top:5px}
-.table-wrap{overflow:auto;background:#fff;border:1px solid #e7e7e7;border-radius:18px}
-table{width:100%;border-collapse:collapse;min-width:1000px}
-th,td{text-align:left;padding:15px;border-bottom:1px solid #eee;font-size:13px;vertical-align:top}
-th{font-size:11px;text-transform:uppercase;letter-spacing:.7px;color:#777;background:#fafafa}
-.reason{max-width:260px;color:#555}
-.empty{text-align:center;padding:50px;color:#777}
-.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#fff3f8;color:#c32670;font-size:11px;font-weight:800}
-.approved{background:#effaf3;color:#16803c}
-.rejected{background:#fff0ef;color:#b42318}
-.row-actions{display:flex;gap:6px;flex-wrap:wrap}
-.small-btn{border:1px solid #ddd;background:#fff;border-radius:8px;padding:7px 9px;cursor:pointer;font-size:11px;font-weight:800}
-.small-btn:hover{background:#f7f7f7}
-.approve{color:#16803c;border-color:#bde5c9;background:#f2fff6}
-.reject{color:#b42318;border-color:#f1c0bb;background:#fff5f4}
-.delete{color:#b42318;border-color:#f1c0bb;background:#fff}
-.notice{margin:0 0 15px;padding:12px 14px;border-radius:10px;background:#fff8e8;color:#795500;font-size:13px;display:none}
-.chat-panel{margin-top:24px;background:#fff;border:1px solid #eee;border-radius:18px;padding:18px;box-shadow:0 8px 25px rgba(0,0,0,.06)}
-.chat-panel h3{margin:0 0 4px}
-.chat-sub{margin:0 0 14px;color:#777;font-size:13px}
-.chat-messages{height:320px;overflow-y:auto;background:#fafafa;border:1px solid #eee;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:9px}
-.chat-msg{max-width:78%;padding:9px 12px;border-radius:14px;background:#f0f0f0;align-self:flex-start;word-break:break-word}
-.chat-name{font-size:11px;font-weight:800;color:#7b3fb5;margin-bottom:3px}
-.chat-time{font-size:9px;color:#999}
-.chat-message-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:5px}
-.chat-delete{border:0;background:transparent;color:#b42318;font-size:10px;cursor:pointer;font-weight:800;padding:3px 6px;border-radius:5px}
-.chat-delete:hover{background:#fff0ef}
-.chat-file{margin-top:6px}
-.chat-file img{max-width:180px;max-height:140px;border-radius:10px;display:block;margin-top:4px;cursor:pointer;object-fit:cover;border:1px solid #ddd}
-.chat-file img:hover{opacity:.9}
-.chat-file .file-link{display:inline-flex;align-items:center;gap:6px;margin-top:4px;padding:7px 10px;background:#fff;border:1px solid #ddd;border-radius:8px;font-size:12px;font-weight:700;color:#171717;text-decoration:none;cursor:pointer}
-.chat-file .file-link:hover{background:#f7f7f7}
-.chat-form{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
-.chat-form select{width:130px;border:1px solid #ddd;border-radius:10px;padding:11px;background:#fff}
-.chat-form input[type="text"]{flex:1;min-width:140px;border:1px solid #ddd;border-radius:10px;padding:11px;background:#fff}
-.chat-form .file-btn{position:relative;border:1px solid #ddd;background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer;font-size:12px;font-weight:800;color:#7b3fb5;white-space:nowrap}
-.chat-form .file-btn input{position:absolute;inset:0;opacity:0;cursor:pointer}
-.chat-form .file-name{font-size:11px;color:#7b3fb5;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.chat-form button[type="submit"]{border:0;border-radius:10px;padding:0 16px;min-height:42px;background:#7b3fb5;color:#fff;font-weight:800;cursor:pointer}
-.chat-form button:disabled{opacity:.6;cursor:not-allowed}
-.chat-empty{text-align:center;color:#999;padding:80px 10px 0;font-size:13px}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.open{display:flex}
-.modal-box{background:#fff;border-radius:18px;max-width:min(520px,95vw);max-height:90vh;overflow:auto;padding:16px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.modal-box img{width:100%;max-height:70vh;object-fit:contain;border-radius:12px;display:block}
-.modal-close{position:absolute;top:10px;right:12px;border:0;background:#171717;color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;line-height:1;display:grid;place-items:center}
-.modal-title{font-size:13px;font-weight:800;margin-bottom:10px;padding-right:40px;word-break:break-all}
-.modal-actions{margin-top:12px;display:flex;gap:8px}
-.modal-actions a{flex:1;text-align:center;padding:10px;background:#7b3fb5;color:#fff;border-radius:10px;font-weight:800;text-decoration:none;font-size:13px}
-.incognito-wrap{margin-top:40px;padding:30px 0 50px;display:flex;justify-content:center}
-.incognito-btn{background:none;border:none;cursor:pointer;opacity:.7;transition:.2s}
-.incognito-btn:hover{opacity:1;transform:scale(1.05)}
-.incognito-btn svg{width:56px;height:56px}
-.visitors-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:110;align-items:center;justify-content:center;padding:20px}
-.visitors-overlay.open{display:flex}
-.visitors-box{background:#fff;border-radius:18px;width:min(560px,95vw);max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.visitors-header{padding:16px 18px;border-bottom:1px solid #eee;display:flex;align-items:center;justify-content:space-between}
-.visitors-header h3{font-size:16px;margin:0}
-.visitors-close{border:0;background:#171717;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px}
-.visitors-list{overflow-y:auto;padding:12px;flex:1}
-.visitor-row{padding:12px;border:1px solid #eee;border-radius:12px;margin-bottom:8px;background:#fafafa;font-size:13px}
-.visitor-row b{display:block;margin-bottom:4px}
-.visitor-meta{color:#666;font-size:12px;line-height:1.55}
-.visitors-empty{text-align:center;padding:40px;color:#999}
-@media(max-width:700px){
-  .stats{grid-template-columns:1fr}
-  .top{align-items:stretch;flex-direction:column}
-  .actions{width:100%}
-  .actions button{flex:1}
-  .chat-form{flex-direction:column;align-items:stretch}
-  .chat-form select,.chat-form input[type="text"],.chat-form .file-btn,.chat-form button{width:100%}
-  .chat-msg{max-width:90%}
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root{
+    --bg:#09090f;
+    --panel:rgba(18,18,30,.72);
+    --panel2:rgba(255,255,255,.045);
+    --border:rgba(255,255,255,.10);
+
+    --text:#f5f3ff;
+    --muted:#9693a8;
+
+    --pink:#ff4d9d;
+    --purple:#7c5cff;
+    --orange:#ff9d45;
+    --green:#52f3a0;
+    --red:#ff6262;
 }
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"DM Sans",Arial,sans-serif;
+    min-height:100vh;
+    color:var(--text);
+
+    background:
+        radial-gradient(circle at 10% 10%,rgba(124,92,255,.16),transparent 27%),
+        radial-gradient(circle at 90% 15%,rgba(255,77,157,.12),transparent 27%),
+        radial-gradient(circle at 50% 100%,rgba(255,157,69,.08),transparent 30%),
+        var(--bg);
+
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.2;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+
+    background-size:45px 45px;
+
+    mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+/* CURSOR */
+
+.cursor{
+    position:fixed;
+    width:18px;
+    height:18px;
+    border-radius:50%;
+
+    background:var(--green);
+
+    pointer-events:none;
+    z-index:99999;
+
+    transform:translate(-50%,-50%) scale(1.35);
+
+    box-shadow:
+        0 0 15px rgba(82,243,160,.8),
+        0 0 35px rgba(82,243,160,.35);
+
+    transition:
+        transform .25s cubic-bezier(.2,.8,.2,1),
+        opacity .2s;
+}
+
+.cursor.moving{
+    transform:translate(-50%,-50%) scale(.65);
+}
+
+.cursor.hidden{
+    opacity:0;
+}
+
+/* LOGIN */
+
+.login{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:20px;
+}
+
+.login-box{
+    width:min(430px,100%);
+    padding:38px;
+
+    background:rgba(18,18,30,.72);
+
+    border:1px solid var(--border);
+    border-radius:28px;
+
+    backdrop-filter:blur(25px);
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.45),
+        0 0 80px rgba(124,92,255,.08);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    font-family:"Space Grotesk",sans-serif;
+    font-size:29px;
+    font-weight:800;
+    letter-spacing:-1.5px;
+}
+
+.logo-icon{
+    width:17px;
+    height:17px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--orange),
+            var(--pink),
+            var(--purple)
+        );
+
+    box-shadow:0 0 22px rgba(255,77,157,.7);
+}
+
+.login-box h2{
+    margin-top:14px;
+    font-family:"Space Grotesk",sans-serif;
+    font-size:27px;
+}
+
+.muted{
+    color:var(--muted);
+    font-size:14px;
+    margin:9px 0 25px;
+    line-height:1.6;
+}
+
+label{
+    display:block;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:#aaa7b8;
+    margin-bottom:8px;
+}
+
+input,
+select{
+    width:100%;
+
+    padding:14px 15px;
+
+    color:white;
+    background:rgba(255,255,255,.045);
+
+    border:1px solid var(--border);
+    border-radius:14px;
+
+    outline:none;
+}
+
+input::placeholder{
+    color:#676474;
+}
+
+input:focus,
+select:focus{
+    border-color:rgba(255,77,157,.7);
+
+    box-shadow:
+        0 0 0 4px rgba(255,77,157,.08);
+}
+
+.btn{
+    border:0;
+    border-radius:14px;
+    padding:14px 18px;
+
+    cursor:pointer;
+    font-weight:800;
+
+    transition:.25s;
+}
+
+.primary{
+    width:100%;
+    margin-top:15px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--orange),
+            var(--pink),
+            var(--purple)
+        );
+
+    box-shadow:0 12px 35px rgba(255,77,157,.20);
+}
+
+.primary:hover{
+    transform:translateY(-3px);
+    box-shadow:0 20px 45px rgba(255,77,157,.35);
+}
+
+.error{
+    color:#ff7777;
+    font-size:13px;
+    margin-top:11px;
+    display:none;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    display:none;
+}
+
+header{
+    width:min(1200px,calc(100% - 30px));
+
+    height:70px;
+
+    position:sticky;
+    top:15px;
+
+    margin:15px auto 0;
+
+    z-index:50;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 16px 0 22px;
+
+    background:rgba(14,14,23,.76);
+
+    border:1px solid var(--border);
+    border-radius:20px;
+
+    backdrop-filter:blur(22px);
+}
+
+.header-brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    font-size:21px;
+}
+
+.header-dot{
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--orange),
+            var(--pink),
+            var(--purple)
+        );
+
+    box-shadow:0 0 18px rgba(255,77,157,.65);
+}
+
+.header-brand span{
+    color:#ff73b5;
+}
+
+.logout{
+    color:white;
+    background:rgba(255,255,255,.07);
+    border:1px solid var(--border);
+}
+
+.logout:hover{
+    background:rgba(255,255,255,.13);
+    transform:translateY(-2px);
+}
+
+/* MAIN */
+
+main{
+    width:min(1200px,calc(100% - 30px));
+    margin:auto;
+    padding:55px 0;
+}
+
+.top{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:15px;
+
+    margin-bottom:25px;
+}
+
+.top h2{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:42px;
+    letter-spacing:-2px;
+}
+
+.top p{
+    margin:5px 0 0;
+}
+
+.actions{
+    display:flex;
+    gap:10px;
+}
+
+.refresh{
+    color:white;
+    background:rgba(255,255,255,.06);
+    border:1px solid var(--border);
+}
+
+.refresh:hover{
+    background:rgba(255,255,255,.12);
+    transform:translateY(-2px);
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    position:relative;
+    overflow:hidden;
+
+    padding:23px;
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+    border-radius:21px;
+
+    backdrop-filter:blur(18px);
+}
+
+.stat::after{
+    content:"";
+    position:absolute;
+
+    width:100px;
+    height:100px;
+
+    right:-40px;
+    top:-50px;
+
+    border-radius:50%;
+
+    background:rgba(255,77,157,.08);
+    filter:blur(25px);
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.stat b{
+    display:block;
+
+    margin-top:6px;
+
+    font-family:"Space Grotesk",sans-serif;
+    font-size:32px;
+}
+
+/* NOTICE */
+
+.notice{
+    display:none;
+
+    margin-bottom:15px;
+    padding:13px 15px;
+
+    border-radius:13px;
+
+    background:rgba(255,157,69,.08);
+    border:1px solid rgba(255,157,69,.2);
+
+    color:#ffc58d;
+    font-size:13px;
+}
+
+/* TABLE */
+
+.table-wrap{
+    overflow:auto;
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+    border-radius:23px;
+
+    backdrop-filter:blur(18px);
+}
+
+table{
+    width:100%;
+    min-width:1050px;
+
+    border-collapse:collapse;
+}
+
+th,
+td{
+    text-align:left;
+
+    padding:16px;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+    font-size:13px;
+    vertical-align:top;
+}
+
+th{
+    color:#8d899e;
+
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+
+    background:rgba(255,255,255,.025);
+}
+
+td{
+    color:#dcd9e5;
+}
+
+.reason{
+    max-width:260px;
+    color:#aaa7b8;
+}
+
+.empty{
+    text-align:center;
+    padding:60px;
+    color:#777386;
+}
+
+.status{
+    display:inline-block;
+
+    padding:6px 10px;
+
+    border-radius:999px;
+
+    background:rgba(255,77,157,.10);
+    color:#ff75b6;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+.approved{
+    background:rgba(82,243,160,.10);
+    color:var(--green);
+}
+
+.rejected{
+    background:rgba(255,98,98,.10);
+    color:#ff7c7c;
+}
+
+.row-actions{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.small-btn{
+    border:1px solid var(--border);
+
+    background:rgba(255,255,255,.04);
+
+    color:#ddd;
+
+    border-radius:9px;
+
+    padding:7px 10px;
+
+    cursor:pointer;
+
+    font-size:11px;
+    font-weight:800;
+
+    transition:.2s;
+}
+
+.small-btn:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.10);
+}
+
+.approve{
+    color:var(--green);
+}
+
+.reject,
+.delete{
+    color:#ff7777;
+}
+
+/* CHAT */
+
+.chat-panel{
+    margin-top:25px;
+
+    padding:23px;
+
+    background:var(--panel);
+
+    border:1px solid var(--border);
+    border-radius:23px;
+
+    backdrop-filter:blur(18px);
+}
+
+.chat-panel h3{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:21px;
+}
+
+.chat-sub{
+    margin:5px 0 15px;
+    color:var(--muted);
+    font-size:13px;
+}
+
+.chat-messages{
+    height:320px;
+
+    overflow-y:auto;
+
+    padding:15px;
+
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+
+    background:rgba(0,0,0,.15);
+
+    border:1px solid var(--border);
+    border-radius:16px;
+}
+
+.chat-msg{
+    max-width:78%;
+
+    padding:10px 13px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.06);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    word-break:break-word;
+}
+
+.chat-name{
+    color:#ff78b5;
+    font-size:11px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+
+.chat-time{
+    color:#777386;
+    font-size:9px;
+}
+
+.chat-message-footer{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:6px;
+}
+
+.chat-delete{
+    border:0;
+    background:transparent;
+    color:#ff7272;
+    font-size:10px;
+    cursor:pointer;
+    font-weight:800;
+}
+
+.chat-empty{
+    text-align:center;
+    color:#777386;
+    padding:80px 10px;
+}
+
+.chat-form{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+    flex-wrap:wrap;
+}
+
+.chat-form select,
+.chat-form input{
+    width:auto;
+}
+
+.chat-form select{
+    min-width:130px;
+}
+
+.chat-form input[type=text]{
+    flex:1;
+    min-width:150px;
+}
+
+.file-btn{
+    position:relative;
+
+    padding:12px;
+
+    border:1px solid var(--border);
+    border-radius:11px;
+
+    background:rgba(255,255,255,.04);
+
+    cursor:pointer;
+
+    color:#d7cfff;
+}
+
+.file-btn input{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    cursor:pointer;
+}
+
+.chat-form button{
+    border:0;
+    border-radius:11px;
+
+    padding:0 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--pink),
+            var(--purple)
+        );
+
+    color:white;
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+/* VISITOR BUTTON */
+
+.incognito-wrap{
+    display:flex;
+    justify-content:center;
+
+    padding:45px 0 20px;
+}
+
+.incognito-btn{
+    width:66px;
+    height:66px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.2);
+}
+
+.incognito-btn:hover{
+    transform:translateY(-5px) scale(1.05);
+
+    border-color:rgba(82,243,160,.5);
+
+    box-shadow:
+        0 15px 40px rgba(82,243,160,.12);
+}
+
+.incognito-btn svg{
+    width:38px;
+    height:38px;
+}
+
+/* MODALS */
+
+.modal-overlay{
+    display:none;
+
+    position:fixed;
+    inset:0;
+
+    z-index:100;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(10px);
+}
+
+.modal-overlay.open{
+    display:flex;
+}
+
+.modal-box{
+    width:min(520px,95vw);
+    max-height:90vh;
+
+    overflow:auto;
+
+    position:relative;
+
+    padding:25px;
+
+    background:#151520;
+
+    border:1px solid var(--border);
+    border-radius:24px;
+
+    box-shadow:0 30px 100px rgba(0,0,0,.55);
+
+    animation:popup .25s ease;
+}
+
+@keyframes popup{
+    from{
+        opacity:0;
+        transform:translateY(15px) scale(.96);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+
+.modal-box h3{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:25px;
+    margin-bottom:7px;
+}
+
+.modal-box p{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.modal-close{
+    position:absolute;
+
+    top:14px;
+    right:14px;
+
+    width:35px;
+    height:35px;
+
+    border:1px solid var(--border);
+    border-radius:50%;
+
+    background:rgba(255,255,255,.06);
+
+    color:white;
+
+    cursor:pointer;
+    font-size:19px;
+}
+
+.modal-close:hover{
+    background:rgba(255,255,255,.13);
+}
+
+/* VISITORS */
+
+.visitors-box{
+    width:min(650px,95vw);
+    max-height:82vh;
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+
+    background:#151520;
+
+    border:1px solid var(--border);
+    border-radius:25px;
+
+    box-shadow:0 30px 100px rgba(0,0,0,.6);
+}
+
+.visitors-header{
+    padding:18px 20px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border-bottom:1px solid var(--border);
+}
+
+.visitors-header h3{
+    font-family:"Space Grotesk",sans-serif;
+}
+
+.visitors-close{
+    width:34px;
+    height:34px;
+
+    border:1px solid var(--border);
+    border-radius:50%;
+
+    background:rgba(255,255,255,.06);
+
+    color:white;
+
+    cursor:pointer;
+}
+
+.visitors-list{
+    overflow-y:auto;
+    padding:14px;
+}
+
+.visitor-row{
+    position:relative;
+
+    padding:15px;
+
+    margin-bottom:9px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+    border-radius:16px;
+}
+
+.visitor-row b{
+    display:block;
+    color:white;
+    margin-bottom:5px;
+}
+
+.visitor-meta{
+    color:#9995a8;
+    font-size:12px;
+    line-height:1.7;
+
+    padding-right:45px;
+}
+
+.visitor-delete{
+    position:absolute;
+
+    right:13px;
+    top:13px;
+
+    width:35px;
+    height:35px;
+
+    border-radius:10px;
+
+    border:1px solid rgba(255,98,98,.25);
+
+    background:rgba(255,98,98,.07);
+
+    color:#ff7474;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.visitor-delete:hover{
+    background:rgba(255,98,98,.17);
+    transform:scale(1.05);
+}
+
+.visitors-empty{
+    text-align:center;
+    padding:60px 15px;
+    color:#777386;
+}
+
+/* PASSWORD */
+
+.visitor-password-box{
+    width:min(380px,95vw);
+    padding:30px;
+
+    background:#151520;
+
+    border:1px solid var(--border);
+    border-radius:25px;
+
+    box-shadow:0 30px 100px rgba(0,0,0,.6);
+
+    text-align:center;
+}
+
+.lock-icon{
+    width:58px;
+    height:58px;
+
+    display:grid;
+    place-items:center;
+
+    margin:0 auto 16px;
+
+    border-radius:19px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--orange),
+            var(--pink),
+            var(--purple)
+        );
+
+    font-size:25px;
+}
+
+.visitor-password-box h3{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:25px;
+}
+
+.visitor-password-box p{
+    color:var(--muted);
+    font-size:13px;
+    margin:8px 0 20px;
+}
+
+.password-buttons{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+
+.password-buttons button{
+    flex:1;
+}
+
+.cancel{
+    color:white;
+    background:rgba(255,255,255,.07);
+    border:1px solid var(--border);
+}
+
+.password-error{
+    color:#ff7474;
+    font-size:12px;
+    margin-top:8px;
+    display:none;
+}
+
+/* FILE */
+
+.file-preview{
+    max-width:100%;
+    max-height:70vh;
+    border-radius:14px;
+}
+
+@media(max-width:750px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .top{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .actions{
+        width:100%;
+    }
+
+    .actions button{
+        flex:1;
+    }
+
+    .chat-form{
+        flex-direction:column;
+    }
+
+    .chat-form select,
+    .chat-form input,
+    .chat-form button,
+    .file-btn{
+        width:100%;
+    }
+
+    .top h2{
+        font-size:34px;
+    }
+
+    .cursor{
+        display:none;
+    }
+}
+
 </style>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f58529'/%3E%3Cstop offset='45%25' stop-color='%23dd2a7b'/%3E%3Cstop offset='100%25' stop-color='%238134af'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='28' fill='url(%23g)'/%3E%3Crect x='23' y='23' width='54' height='54' rx='17' fill='none' stroke='white' stroke-width='7'/%3E%3Ccircle cx='50' cy='50' r='13' fill='none' stroke='white' stroke-width='7'/%3E%3Ccircle cx='68' cy='32' r='5' fill='white'/%3E%3C/svg%3E">
 </head>
+
 <body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- LOGIN -->
+
 <section class="login" id="login">
-  <div class="login-box">
-    <div class="logo">MeetTime</div>
-    <h2 style="margin-top:8px">Yönetim Paneli</h2>
-    <p class="muted">Başvuruları görüntülemek için yönetici şifresini gir.</p>
-    <label for="password">Yönetici şifresi</label>
-    <input id="password" type="password" placeholder="Şifre">
-    <button class="btn primary" id="loginBtn">Panele Gir</button>
-    <div class="error" id="loginError">Şifre yanlış.</div>
-  </div>
-</section>
-<section class="dashboard" id="dashboard">
-<header>
-  <h1>MeetTime <span style="color:#dd2a7b">Yönetim</span></h1>
-  <button class="btn logout" id="logout">Çıkış</button>
-</header>
-<main>
-  <div class="top">
-    <div>
-      <h2>Başvurular</h2>
-      <p class="muted" style="margin:4px 0 0">MeetTime başvuruları</p>
-    </div>
-    <div class="actions">
-      <button class="btn refresh" id="refresh">↻ Yenile</button>
-    </div>
-  </div>
-  <div class="notice" id="notice"></div>
-  <div class="stats">
-    <div class="stat"><span>Toplam başvuru</span><b id="total">0</b></div>
-    <div class="stat"><span>Bugünkü başvuru</span><b id="today">0</b></div>
-    <div class="stat"><span>Son başvuru</span><b id="latest">—</b></div>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Sıra</th><th>Kiminle?</th><th>Ad Soyad</th><th>Gün</th><th>Saat</th>
-          <th>Buluşma nedeni</th><th>İletişim</th><th>Tarih</th><th>Durum</th><th>İşlem</th>
-        </tr>
-      </thead>
-      <tbody id="rows">
-        <tr><td colspan="10" class="empty">Başvurular yükleniyor...</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <section class="chat-panel">
-    <h3>💬 Ortak Sohbet</h3>
-    <p class="chat-sub">Mesaj yaz veya dosya ekle (fotoğraf / belge). Max 3 MB.</p>
-    <div id="chatMessages" class="chat-messages">
-      <div class="chat-empty">Henüz mesaj yok.</div>
-    </div>
-    <form id="chatForm" class="chat-form">
-      <select id="chatName" required>
-        <option value="">Kim yazıyor?</option>
-        <option value="Kadir">Kadir</option>
-        <option value="Arslan">Arslan</option>
-      </select>
-      <input id="chatText" type="text" maxlength="500" placeholder="Mesaj yaz..." autocomplete="off">
-      <label class="file-btn">
-        📎 Dosya
-        <input type="file" id="chatFile" accept="image/jpeg,image/png,image/webp,application/pdf,.doc,.docx">
-      </label>
-      <span class="file-name" id="fileName"></span>
-      <button type="submit">Gönder</button>
-    </form>
-  </section>
 
-  <div class="incognito-wrap">
-    <button class="incognito-btn" id="incognitoBtn" title="Ziyaretçiler">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C9.5 2 7.5 3.5 7 5.5C5 6 3.5 8 3.5 10.5C3.5 12 4.2 13.3 5.3 14.2C4.5 15.5 4 17 4 18.5C4 21 6.5 22.5 9.5 22.5C11 22.5 12.3 22 13.2 21.2C13.7 21.4 14.3 21.5 15 21.5C17.5 21.5 19.5 20 20.2 17.8C21.5 17.2 22.5 15.7 22.5 14C22.5 11.5 20.5 9.5 18 9.2C18.3 8.5 18.5 7.7 18.5 6.8C18.5 4.2 16.3 2 12 2Z" fill="#5F6368"/>
-        <ellipse cx="9" cy="11" rx="1.3" ry="1.5" fill="#fff"/>
-        <ellipse cx="15" cy="11" rx="1.3" ry="1.5" fill="#fff"/>
-        <path d="M8 15.5C9 16.5 10.5 17 12 17C13.5 17 15 16.5 16 15.5" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
-        <path d="M7 7C8 5.5 10 4.5 12 4.5C14 4.5 16 5.5 17 7" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
+<div class="login-box">
+
+    <div class="logo">
+        <div class="logo-icon"></div>
+        MeetTime
+    </div>
+
+    <h2>Yönetim Paneli</h2>
+
+    <p class="muted">
+        MeetTime yönetim alanına giriş yap.
+    </p>
+
+    <label>Yönetici şifresi</label>
+
+    <input
+        id="password"
+        type="password"
+        placeholder="Şifre"
+        autocomplete="off"
+    >
+
+    <button class="btn primary" id="loginBtn">
+        Panele Gir →
     </button>
-  </div>
-</main>
+
+    <div class="error" id="loginError">
+        Şifre yanlış.
+    </div>
+
+</div>
+
 </section>
 
-<div class="modal-overlay" id="fileModal">
-  <div class="modal-box">
-    <button class="modal-close" id="modalClose">×</button>
-    <div class="modal-title" id="modalTitle"></div>
-    <div id="modalContent"></div>
-    <div class="modal-actions">
-      <a id="modalDownload" href="#" download>İndir</a>
+
+<!-- DASHBOARD -->
+
+<section class="dashboard" id="dashboard">
+
+<header>
+
+    <div class="header-brand">
+
+        <div class="header-dot"></div>
+
+        MeetTime
+        <span>Yönetim</span>
+
     </div>
-  </div>
+
+    <button class="btn logout" id="logout">
+        Çıkış
+    </button>
+
+</header>
+
+
+<main>
+
+<div class="top">
+
+    <div>
+
+        <h2>Başvurular</h2>
+
+        <p class="muted">
+            MeetTime yönetim merkezi
+        </p>
+
+    </div>
+
+    <div class="actions">
+
+        <button
+            class="btn refresh"
+            id="refresh"
+        >
+            ↻ Yenile
+        </button>
+
+    </div>
+
 </div>
 
-<div class="visitors-overlay" id="visitorsModal">
-  <div class="visitors-box">
-    <div class="visitors-header">
-      <h3>👁 Ziyaretçiler</h3>
-      <button class="visitors-close" id="visitorsClose">×</button>
+
+<div class="notice" id="notice"></div>
+
+
+<div class="stats">
+
+    <div class="stat">
+        <span>Toplam başvuru</span>
+        <b id="total">0</b>
     </div>
-    <div class="visitors-list" id="visitorsList">
-      <div class="visitors-empty">Yükleniyor...</div>
+
+    <div class="stat">
+        <span>Bugünkü başvuru</span>
+        <b id="today">0</b>
     </div>
-  </div>
+
+    <div class="stat">
+        <span>Son başvuru</span>
+        <b id="latest">—</b>
+    </div>
+
 </div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Sıra</th>
+<th>Kiminle?</th>
+<th>Ad Soyad</th>
+<th>Gün</th>
+<th>Saat</th>
+<th>Buluşma nedeni</th>
+<th>İletişim</th>
+<th>Tarih</th>
+<th>Durum</th>
+<th>İşlem</th>
+
+</tr>
+
+</thead>
+
+<tbody id="rows">
+
+<tr>
+
+<td colspan="10" class="empty">
+Başvurular yükleniyor...
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<!-- CHAT -->
+
+<section class="chat-panel">
+
+<h3>💬 Ortak Sohbet</h3>
+
+<p class="chat-sub">
+Kadir ve Arslan arasında ortak sohbet.
+</p>
+
+<div
+    id="chatMessages"
+    class="chat-messages"
+>
+    <div class="chat-empty">
+        Henüz mesaj yok.
+    </div>
+</div>
+
+
+<form
+    id="chatForm"
+    class="chat-form"
+>
+
+<select id="chatName" required>
+
+<option value="">
+Kim yazıyor?
+</option>
+
+<option value="Kadir">
+Kadir
+</option>
+
+<option value="Arslan">
+Arslan
+</option>
+
+</select>
+
+
+<input
+    id="chatText"
+    type="text"
+    maxlength="500"
+    placeholder="Mesaj yaz..."
+    autocomplete="off"
+>
+
+
+<label class="file-btn">
+
+📎 Dosya
+
+<input
+    type="file"
+    id="chatFile"
+    accept="image/jpeg,image/png,image/webp,application/pdf,.doc,.docx"
+>
+
+</label>
+
+
+<span
+    id="fileName"
+    style="font-size:11px;color:#ff78b5"
+></span>
+
+
+<button type="submit">
+Gönder
+</button>
+
+</form>
+
+</section>
+
+
+<!-- VISITOR BUTTON -->
+
+<div class="incognito-wrap">
+
+<button
+    class="incognito-btn"
+    id="incognitoBtn"
+    title="Ziyaretçiler"
+>
+
+<svg
+viewBox="0 0 24 24"
+fill="none"
+xmlns="http://www.w3.org/2000/svg"
+>
+
+<path
+d="M12 2C9.5 2 7.5 3.5 7 5.5C5 6 3.5 8 3.5 10.5C3.5 12 4.2 13.3 5.3 14.2C4.5 15.5 4 17 4 18.5C4 21 6.5 22.5 9.5 22.5C11 22.5 12.3 22 13.2 21.2C13.7 21.4 14.3 21.5 15 21.5C17.5 21.5 19.5 20 20.2 17.8C21.5 17.2 22.5 15.7 22.5 14C22.5 11.5 20.5 9.5 18 9.2C18.3 8.5 18.5 7.7 18.5 6.8C18.5 4.2 16.3 2 12 2Z"
+fill="url(#visitorGradient)"
+/>
+
+<defs>
+
+<linearGradient
+id="visitorGradient"
+x1="0"
+y1="0"
+x2="1"
+y2="1"
+>
+
+<stop offset="0" stop-color="#ff9d45"/>
+<stop offset=".5" stop-color="#ff4d9d"/>
+<stop offset="1" stop-color="#7c5cff"/>
+
+</linearGradient>
+
+</defs>
+
+<ellipse
+cx="9"
+cy="11"
+rx="1.3"
+ry="1.5"
+fill="white"
+/>
+
+<ellipse
+cx="15"
+cy="11"
+rx="1.3"
+ry="1.5"
+fill="white"
+/>
+
+<path
+d="M8 15.5C9 16.5 10.5 17 12 17C13.5 17 15 16.5 16 15.5"
+stroke="white"
+stroke-width="1.2"
+stroke-linecap="round"
+/>
+
+</svg>
+
+</button>
+
+</div>
+
+</main>
+
+</section>
+
+
+<!-- VISITOR PASSWORD -->
+
+<div
+class="modal-overlay"
+id="visitorPasswordModal"
+>
+
+<div class="visitor-password-box">
+
+<div class="lock-icon">
+🔐
+</div>
+
+<h3>
+Ziyaretçiler
+</h3>
+
+<p>
+Bu bölüme erişmek için şifre gerekli.
+</p>
+
+<input
+id="visitorPassword"
+type="password"
+placeholder="Şifre"
+autocomplete="off"
+>
+
+<div
+class="password-error"
+id="visitorPasswordError"
+>
+Şifre yanlış.
+</div>
+
+<div class="password-buttons">
+
+<button
+class="btn cancel"
+id="visitorCancel"
+>
+İptal
+</button>
+
+<button
+class="btn primary"
+id="visitorPasswordSubmit"
+style="margin:0"
+>
+Devam →
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- VISITORS -->
+
+<div
+class="modal-overlay"
+id="visitorsModal"
+>
+
+<div class="visitors-box">
+
+<div class="visitors-header">
+
+<h3>
+👁 Ziyaretçiler
+</h3>
+
+<button
+class="visitors-close"
+id="visitorsClose"
+>
+×
+</button>
+
+</div>
+
+<div
+class="visitors-list"
+id="visitorsList"
+>
+
+<div class="visitors-empty">
+Yükleniyor...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FILE MODAL -->
+
+<div
+class="modal-overlay"
+id="fileModal"
+>
+
+<div class="modal-box">
+
+<button
+class="modal-close"
+id="modalClose"
+>
+×
+</button>
+
+<h3 id="modalTitle">
+Dosya
+</h3>
+
+<div
+id="modalContent"
+style="margin-top:15px"
+></div>
+
+</div>
+
+</div>
+
 
 <script>
-const ADMIN_PASSWORD = "sex";
-const API_URL = "https://meetime-api.kadzoka5452.workers.dev";
 
-const login = document.getElementById("login");
-const dashboard = document.getElementById("dashboard");
-const password = document.getElementById("password");
-const loginBtn = document.getElementById("loginBtn");
-const loginError = document.getElementById("loginError");
-const rows = document.getElementById("rows");
-const notice = document.getElementById("notice");
+const ADMIN_PASSWORD = "sex";
+
+const VISITOR_PASSWORD = "prno";
+
+const API_URL =
+"https://meetime-api.kadzoka5452.workers.dev";
+
+
+const login =
+document.getElementById("login");
+
+const dashboard =
+document.getElementById("dashboard");
+
+const password =
+document.getElementById("password");
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+const loginError =
+document.getElementById("loginError");
+
+const rows =
+document.getElementById("rows");
+
+const notice =
+document.getElementById("notice");
+
+
+/* =========================
+   CURSOR
+========================= */
+
+const cursor =
+document.getElementById("cursor");
+
+let cursorTimer;
+
+document.addEventListener("mousemove",e=>{
+
+    cursor.classList.remove("hidden");
+
+    cursor.style.left =
+        e.clientX + "px";
+
+    cursor.style.top =
+        e.clientY + "px";
+
+    cursor.classList.add("moving");
+
+    clearTimeout(cursorTimer);
+
+    cursorTimer =
+        setTimeout(()=>{
+
+            cursor.classList.remove("moving");
+
+        },180);
+
+});
+
+
+document.addEventListener("mouseleave",()=>{
+
+    cursor.classList.add("hidden");
+
+});
+
+
+/* =========================
+   SECURITY HTML
+========================= */
 
 function escapeHtml(v){
-  return String(v ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+
+    return String(v ?? "")
+    .replace(
+        /[&<>"']/g,
+        m=>({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[m])
+    );
+
 }
+
+
+/* =========================
+   LOGIN
+========================= */
 
 function showDashboard(){
-  login.style.display = "none";
-  dashboard.style.display = "block";
-  loadApplications();
-  loadChat();
+
+    login.style.display="none";
+
+    dashboard.style.display="block";
+
+    loadApplications();
+
+    loadChat();
+
 }
+
+
 function showError(msg){
-  loginError.textContent = msg;
-  loginError.style.display = "block";
+
+    loginError.textContent=msg;
+
+    loginError.style.display="block";
+
 }
-loginBtn.onclick = function(){
-  if(password.value === ADMIN_PASSWORD){
-    sessionStorage.setItem("meet_admin", "1");
-    showDashboard();
-  }else showError("Şifre yanlış.");
+
+
+loginBtn.onclick=()=>{
+
+    if(password.value===ADMIN_PASSWORD){
+
+        sessionStorage.setItem(
+            "meet_admin",
+            "1"
+        );
+
+        showDashboard();
+
+    }else{
+
+        showError(
+            "Şifre yanlış."
+        );
+
+    }
+
 };
-password.addEventListener("keydown", e => { if(e.key === "Enter") loginBtn.click(); });
-document.getElementById("logout").onclick = function(){
-  sessionStorage.removeItem("meet_admin");
-  location.reload();
+
+
+password.addEventListener(
+"keydown",
+e=>{
+
+    if(e.key==="Enter")
+        loginBtn.click();
+
+});
+
+
+document
+.getElementById("logout")
+.onclick=()=>{
+
+    sessionStorage.removeItem(
+        "meet_admin"
+    );
+
+    location.reload();
+
 };
-document.getElementById("refresh").onclick = function(){
-  loadApplications();
-  loadChat();
+
+
+document
+.getElementById("refresh")
+.onclick=()=>{
+
+    loadApplications();
+
+    loadChat();
+
 };
+
+
+/* =========================
+   APPLICATIONS
+========================= */
 
 async function loadApplications(){
-  notice.style.display = "none";
-  rows.innerHTML = '<tr><td colspan="10" class="empty">Başvurular yükleniyor...</td></tr>';
-  try{
-    const response = await fetch(API_URL + "?action=applications", {
-      headers: { "X-Admin-Password": ADMIN_PASSWORD }
-    });
-    const data = await response.json();
-    if(!data.success) throw new Error(data.message || "Başvurular alınamadı.");
-    const apps = data.applications || [];
-    document.getElementById("total").textContent = apps.length;
-    const todayKey = new Date().toLocaleDateString("tr-TR");
-    const todayApps = apps.filter(a => new Date(Number(a.created_at)).toLocaleDateString("tr-TR") === todayKey);
-    document.getElementById("today").textContent = todayApps.length;
-    document.getElementById("latest").textContent = apps.length
-      ? new Date(Number(apps[0].created_at)).toLocaleTimeString("tr-TR", { hour:"2-digit", minute:"2-digit" })
-      : "—";
-    if(!apps.length){
-      rows.innerHTML = '<tr><td colspan="10" class="empty">Henüz başvuru yok.</td></tr>';
-      return;
-    }
-    rows.innerHTML = apps.map((a,i) => `
-      <tr>
-        <td><strong>${escapeHtml(String(a.id ?? i+1).padStart(3,"0"))}</strong></td>
-        <td><span class="status">${escapeHtml(a.person || a.withWhom || "—")}</span></td>
-        <td><strong>${escapeHtml(a.name || "—")}</strong></td>
-        <td>${escapeHtml(a.day || "—")}</td>
-        <td>${escapeHtml(a.time || "—")}</td>
-        <td class="reason">${escapeHtml(a.reason || "—")}</td>
-        <td>${escapeHtml(a.contact || "—")}</td>
-        <td>${formatDate(a.created_at)}</td>
-        <td><span class="status ${statusClass(a.status)}">${escapeHtml(statusText(a.status))}</span></td>
-        <td>
-          <div class="row-actions">
-            <button class="small-btn approve" onclick="changeStatus(${Number(a.id)},'approved')">Onayla</button>
-            <button class="small-btn reject" onclick="changeStatus(${Number(a.id)},'rejected')">Reddet</button>
-            <button class="small-btn delete" onclick="deleteApplication(${Number(a.id)})">Sil</button>
-          </div>
+
+    notice.style.display="none";
+
+    rows.innerHTML=
+    `<tr>
+        <td colspan="10" class="empty">
+        Başvurular yükleniyor...
         </td>
-      </tr>`).join("");
-  }catch(err){
-    console.error(err);
-    rows.innerHTML = '<tr><td colspan="10" class="empty">Başvurular alınamadı.</td></tr>';
-    notice.textContent = err.message;
-    notice.style.display = "block";
-  }
+    </tr>`;
+
+    try{
+
+        const response=
+        await fetch(
+            API_URL+
+            "?action=applications",
+            {
+                headers:{
+                    "X-Admin-Password":
+                    ADMIN_PASSWORD
+                }
+            }
+        );
+
+        const data=
+        await response.json();
+
+        if(!data.success)
+            throw new Error(
+                data.message ||
+                "Başvurular alınamadı."
+            );
+
+        const apps=
+            data.applications || [];
+
+        document
+        .getElementById("total")
+        .textContent=
+        apps.length;
+
+        const todayKey=
+        new Date()
+        .toLocaleDateString("tr-TR");
+
+        const todayApps=
+        apps.filter(a=>
+            new Date(
+                Number(a.created_at)
+            ).toLocaleDateString(
+                "tr-TR"
+            )===todayKey
+        );
+
+        document
+        .getElementById("today")
+        .textContent=
+        todayApps.length;
+
+        document
+        .getElementById("latest")
+        .textContent=
+        apps.length
+        ?
+        new Date(
+            Number(apps[0].created_at)
+        ).toLocaleTimeString(
+            "tr-TR",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        )
+        :
+        "—";
+
+
+        if(!apps.length){
+
+            rows.innerHTML=
+            `<tr>
+                <td colspan="10"
+                    class="empty">
+                    Henüz başvuru yok.
+                </td>
+            </tr>`;
+
+            return;
+
+        }
+
+
+        rows.innerHTML=
+        apps.map((a,i)=>`
+
+<tr>
+
+<td>
+<strong>
+${escapeHtml(
+String(a.id ?? i+1)
+.padStart(3,"0")
+)}
+</strong>
+</td>
+
+<td>
+<span class="status">
+${escapeHtml(
+a.person ||
+a.withWhom ||
+"—"
+)}
+</span>
+</td>
+
+<td>
+<strong>
+${escapeHtml(a.name||"—")}
+</strong>
+</td>
+
+<td>
+${escapeHtml(a.day||"—")}
+</td>
+
+<td>
+${escapeHtml(a.time||"—")}
+</td>
+
+<td class="reason">
+${escapeHtml(a.reason||"—")}
+</td>
+
+<td>
+${escapeHtml(a.contact||"—")}
+</td>
+
+<td>
+${formatDate(a.created_at)}
+</td>
+
+<td>
+<span class="status
+${statusClass(a.status)}">
+
+${escapeHtml(
+statusText(a.status)
+)}
+
+</span>
+</td>
+
+<td>
+
+<div class="row-actions">
+
+<button
+class="small-btn approve"
+onclick="changeStatus(
+${Number(a.id)},
+'approved'
+)"
+>
+Onayla
+</button>
+
+<button
+class="small-btn reject"
+onclick="changeStatus(
+${Number(a.id)},
+'rejected'
+)"
+>
+Reddet
+</button>
+
+<button
+class="small-btn delete"
+onclick="deleteApplication(
+${Number(a.id)}
+)"
+>
+Sil
+</button>
+
+</div>
+
+</td>
+
+</tr>
+
+`).join("");
+
+
+    }catch(err){
+
+        console.error(err);
+
+        rows.innerHTML=
+        `<tr>
+            <td colspan="10"
+                class="empty">
+                Başvurular alınamadı.
+            </td>
+        </tr>`;
+
+        notice.textContent=
+            err.message;
+
+        notice.style.display=
+            "block";
+
+    }
+
 }
+
 
 function statusText(v){
-  if(v === "approved") return "Onaylandı";
-  if(v === "rejected") return "Reddedildi";
-  return "İnceleniyor";
+
+    if(v==="approved")
+        return "Onaylandı";
+
+    if(v==="rejected")
+        return "Reddedildi";
+
+    return "İnceleniyor";
+
 }
+
+
 function statusClass(v){
-  if(v === "approved") return "approved";
-  if(v === "rejected") return "rejected";
-  return "";
+
+    if(v==="approved")
+        return "approved";
+
+    if(v==="rejected")
+        return "rejected";
+
+    return "";
+
 }
 
-async function adminAction(action, id){
-  const response = await fetch(API_URL + "?action=" + encodeURIComponent(action), {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-Admin-Password": ADMIN_PASSWORD },
-    body: JSON.stringify({ id })
-  });
-  const data = await response.json();
-  if(!data.success) throw new Error(data.message || "İşlem başarısız.");
-  return data;
+
+async function adminAction(
+    action,
+    id
+){
+
+    const response=
+    await fetch(
+        API_URL+
+        "?action="+
+        encodeURIComponent(action),
+        {
+            method:"POST",
+
+            headers:{
+                "Content-Type":
+                "application/json",
+
+                "X-Admin-Password":
+                ADMIN_PASSWORD
+            },
+
+            body:
+            JSON.stringify({id})
+        }
+    );
+
+    const data=
+        await response.json();
+
+    if(!data.success)
+        throw new Error(
+            data.message ||
+            "İşlem başarısız."
+        );
+
+    return data;
+
 }
 
-async function changeStatus(id, status){
-  const label = status === "approved" ? "onaylamak" : "reddetmek";
-  if(!confirm("Bu başvuruyu " + label + " istediğine emin misin?")) return;
-  try{
-    await adminAction(status === "approved" ? "approve" : "reject", id);
-    await loadApplications();
-  }catch(err){ alert(err.message); }
+
+async function changeStatus(
+    id,
+    status
+){
+
+    const label=
+    status==="approved"
+    ?
+    "onaylamak"
+    :
+    "reddetmek";
+
+    if(!confirm(
+        "Bu başvuruyu "+
+        label+
+        " istediğine emin misin?"
+    ))
+        return;
+
+    try{
+
+        await adminAction(
+            status==="approved"
+            ?"approve"
+            :"reject",
+            id
+        );
+
+        await loadApplications();
+
+    }catch(err){
+
+        alert(err.message);
+
+    }
+
 }
+
 
 async function deleteApplication(id){
-  if(!confirm("Bu başvuruyu kalıcı olarak silmek istediğine emin misin?")) return;
-  try{
-    await adminAction("delete", id);
-    await loadApplications();
-  }catch(err){ alert(err.message); }
+
+    if(!confirm(
+        "Bu başvuruyu kalıcı olarak silmek istediğine emin misin?"
+    ))
+        return;
+
+    try{
+
+        await adminAction(
+            "delete",
+            id
+        );
+
+        await loadApplications();
+
+    }catch(err){
+
+        alert(err.message);
+
+    }
+
 }
+
 
 function formatDate(v){
-  const d = new Date(Number(v));
-  if(isNaN(d)) return "—";
-  return d.toLocaleString("tr-TR", { dateStyle: "short", timeStyle: "short" });
+
+    const d=
+    new Date(Number(v));
+
+    if(isNaN(d))
+        return "—";
+
+    return d.toLocaleString(
+        "tr-TR",
+        {
+            dateStyle:"short",
+            timeStyle:"short"
+        }
+    );
+
 }
 
-const modal = document.getElementById("fileModal");
-const modalTitle = document.getElementById("modalTitle");
-const modalContent = document.getElementById("modalContent");
-const modalDownload = document.getElementById("modalDownload");
-const modalClose = document.getElementById("modalClose");
 
-function openFileModal(url, name, isImage){
-  modalTitle.textContent = name || "Dosya";
-  modalDownload.href = url;
-  modalDownload.setAttribute("download", name || "dosya");
-  if(isImage){
-    modalContent.innerHTML = `<img src="${escapeHtml(url)}" alt="${escapeHtml(name || "")}">`;
-  }else{
-    modalContent.innerHTML = `<p style="padding:20px;text-align:center;color:#555">Belge önizlemesi yok. Aşağıdan indirebilirsin.</p>`;
-  }
-  modal.classList.add("open");
-}
-function closeModal(){
-  modal.classList.remove("open");
-  modalContent.innerHTML = "";
-}
-modalClose.onclick = closeModal;
-modal.onclick = function(e){ if(e.target === modal) closeModal(); };
-document.addEventListener("keydown", e => { if(e.key === "Escape"){ closeModal(); closeVisitors(); }});
+/* =========================
+   VISITOR PASSWORD
+========================= */
 
-const visitorsModal = document.getElementById("visitorsModal");
-const visitorsList = document.getElementById("visitorsList");
-const visitorsClose = document.getElementById("visitorsClose");
-const incognitoBtn = document.getElementById("incognitoBtn");
+const visitorPasswordModal=
+document.getElementById(
+    "visitorPasswordModal"
+);
 
-function closeVisitors(){
-  visitorsModal.classList.remove("open");
-}
-visitorsClose.onclick = closeVisitors;
-visitorsModal.onclick = function(e){ if(e.target === visitorsModal) closeVisitors(); };
+const visitorPassword=
+document.getElementById(
+    "visitorPassword"
+);
 
-incognitoBtn.onclick = async function(){
-  visitorsModal.classList.add("open");
-  visitorsList.innerHTML = '<div class="visitors-empty">Yükleniyor...</div>';
-  try{
-    const res = await fetch(API_URL + "?action=visitors", {
-      headers: { "X-Admin-Password": ADMIN_PASSWORD }
-    });
-    const data = await res.json();
-    if(!data.success) throw new Error(data.message || "Alınamadı.");
-    const list = data.visitors || [];
-    if(!list.length){
-      visitorsList.innerHTML = '<div class="visitors-empty">Henüz ziyaretçi yok.</div>';
-      return;
-    }
-    visitorsList.innerHTML = list.map(v => `
-      <div class="visitor-row">
-        <b>${escapeHtml(v.ip || "—")}</b>
-        <div class="visitor-meta">
-          📍 ${escapeHtml(v.city || "—")} / ${escapeHtml(v.region || "—")} (${escapeHtml(v.country || "—")})<br>
-          ${v.address ? "🏠 " + escapeHtml(v.address) + "<br>" : ""}
-          ${v.lat != null ? "📌 " + Number(v.lat).toFixed(5) + ", " + Number(v.lng).toFixed(5) + "<br>" : ""}
-          🕒 ${formatDate(v.created_at)}
-        </div>
-      </div>
-    `).join("");
-  }catch(err){
-    visitorsList.innerHTML = '<div class="visitors-empty">' + escapeHtml(err.message) + '</div>';
-  }
+const visitorPasswordError=
+document.getElementById(
+    "visitorPasswordError"
+);
+
+
+document
+.getElementById("incognitoBtn")
+.onclick=()=>{
+
+    visitorPassword.value="";
+
+    visitorPasswordError.style.display=
+        "none";
+
+    visitorPasswordModal
+        .classList.add("open");
+
+    setTimeout(
+        ()=>visitorPassword.focus(),
+        100
+    );
+
 };
 
-async function loadChat(){
-  const box = document.getElementById("chatMessages");
-  if(!box) return;
-  try{
-    const res = await fetch(API_URL + "?action=chat", {
-      headers: { "X-Admin-Password": ADMIN_PASSWORD }
-    });
-    const data = await res.json();
-    if(!data.success) throw new Error(data.message || "Sohbet yüklenemedi.");
-    const messages = data.messages || [];
-    if(!messages.length){
-      box.innerHTML = '<div class="chat-empty">Henüz mesaj yok.</div>';
-      return;
+
+document
+.getElementById("visitorCancel")
+.onclick=()=>{
+
+    visitorPasswordModal
+        .classList.remove("open");
+
+};
+
+
+document
+.getElementById(
+    "visitorPasswordSubmit"
+)
+.onclick=checkVisitorPassword;
+
+
+visitorPassword.addEventListener(
+"keydown",
+e=>{
+
+    if(e.key==="Enter")
+        checkVisitorPassword();
+
+});
+
+
+function checkVisitorPassword(){
+
+    if(
+        visitorPassword.value===
+        VISITOR_PASSWORD
+    ){
+
+        visitorPasswordModal
+            .classList.remove("open");
+
+        openVisitors();
+
+    }else{
+
+        visitorPasswordError
+            .style.display="block";
+
+        visitorPassword.value="";
+
+        visitorPassword.focus();
+
     }
-    box.innerHTML = messages.map(m => {
-      let fileHtml = "";
-      if(m.file_id){
-        const fileUrl = API_URL + "?action=file&id=" + m.file_id;
-        const isImage = (m.file_mime || "").startsWith("image/");
-        const name = m.file_name || "dosya";
-        if(isImage){
-          fileHtml = `<div class="chat-file">
-            <img src="${escapeHtml(fileUrl)}" alt="${escapeHtml(name)}" loading="lazy"
-              onclick="openFileModal('${escapeHtml(fileUrl)}','${escapeHtml(name)}',true)">
-          </div>`;
-        }else{
-          fileHtml = `<div class="chat-file">
-            <span class="file-link" onclick="openFileModal('${escapeHtml(fileUrl)}','${escapeHtml(name)}',false)">📄 ${escapeHtml(name)}</span>
-          </div>`;
-        }
-      }
-      const textHtml = m.message ? `<div>${escapeHtml(m.message)}</div>` : "";
-      return `
-      <div class="chat-msg">
-        <div class="chat-name">${escapeHtml(m.sender || "Bilinmiyor")}</div>
-        ${textHtml}
-        ${fileHtml}
-        <div class="chat-message-footer">
-          <div class="chat-time">${formatDate(m.created_at)}</div>
-          <button type="button" class="chat-delete" onclick="deleteChatMessage(${Number(m.id)})">🗑️ Sil</button>
-        </div>
-      </div>`;
-    }).join("");
-    box.scrollTop = box.scrollHeight;
-  }catch(err){
-    console.error(err);
-    box.innerHTML = '<div class="chat-empty">' + escapeHtml(err.message) + '</div>';
-  }
+
 }
+
+
+/* =========================
+   VISITORS
+========================= */
+
+const visitorsModal=
+document.getElementById(
+    "visitorsModal"
+);
+
+const visitorsList=
+document.getElementById(
+    "visitorsList"
+);
+
+
+function closeVisitors(){
+
+    visitorsModal
+        .classList.remove("open");
+
+}
+
+
+document
+.getElementById("visitorsClose")
+.onclick=
+closeVisitors;
+
+
+visitorsModal.onclick=e=>{
+
+    if(e.target===visitorsModal)
+        closeVisitors();
+
+};
+
+
+async function openVisitors(){
+
+    visitorsModal
+        .classList.add("open");
+
+    visitorsList.innerHTML=
+    `<div class="visitors-empty">
+        Ziyaretçiler yükleniyor...
+    </div>`;
+
+
+    try{
+
+        const res=
+        await fetch(
+            API_URL+
+            "?action=visitors",
+            {
+                headers:{
+                    "X-Admin-Password":
+                    ADMIN_PASSWORD
+                }
+            }
+        );
+
+        const data=
+        await res.json();
+
+        if(!data.success)
+            throw new Error(
+                data.message ||
+                "Ziyaretçiler alınamadı."
+            );
+
+        const list=
+            data.visitors || [];
+
+
+        if(!list.length){
+
+            visitorsList.innerHTML=
+            `<div class="visitors-empty">
+                Henüz ziyaretçi yok.
+            </div>`;
+
+            return;
+
+        }
+
+
+        visitorsList.innerHTML=
+        list.map(v=>`
+
+<div class="visitor-row">
+
+<button
+class="visitor-delete"
+title="Ziyaretçiyi sil"
+onclick="deleteVisitor(
+${Number(v.id)}
+)"
+>
+🗑️
+</button>
+
+<b>
+🌐 ${escapeHtml(
+v.ip || "Bilinmeyen"
+)}
+</b>
+
+<div class="visitor-meta">
+
+📍
+${escapeHtml(
+v.city || "—"
+)}
+/
+${escapeHtml(
+v.region || "—"
+)}
+(
+${escapeHtml(
+v.country || "—"
+)}
+)
+
+<br>
+
+${v.address
+?
+"🏠 "+
+escapeHtml(v.address)+
+"<br>"
+:
+""}
+
+${v.lat!=null
+?
+"📌 "+
+Number(v.lat).toFixed(5)+
+", "+
+Number(v.lng).toFixed(5)+
+"<br>"
+:
+""}
+
+🕒
+${formatDate(v.created_at)}
+
+</div>
+
+</div>
+
+`).join("");
+
+
+    }catch(err){
+
+        visitorsList.innerHTML=
+        `<div class="visitors-empty">
+            ${escapeHtml(err.message)}
+        </div>`;
+
+    }
+
+}
+
+
+/* =========================
+   DELETE VISITOR
+========================= */
+
+async function deleteVisitor(id){
+
+    if(!id){
+
+        alert(
+            "Bu ziyaretçinin ID bilgisi bulunamadı."
+        );
+
+        return;
+
+    }
+
+
+    if(!confirm(
+        "Bu ziyaretçiyi kalıcı olarak silmek istediğine emin misin?"
+    ))
+        return;
+
+
+    try{
+
+        const res=
+        await fetch(
+            API_URL+
+            "?action=delete-visitor",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                    "application/json",
+
+                    "X-Admin-Password":
+                    ADMIN_PASSWORD
+                },
+
+                body:
+                JSON.stringify({
+                    id:Number(id)
+                })
+            }
+        );
+
+
+        const data=
+        await res.json();
+
+
+        if(!data.success)
+            throw new Error(
+                data.message ||
+                "Ziyaretçi silinemedi."
+            );
+
+
+        await openVisitors();
+
+
+    }catch(err){
+
+        alert(
+            "Ziyaretçi silinemedi: "+
+            err.message
+        );
+
+    }
+
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+async function loadChat(){
+
+    const box=
+        document.getElementById(
+            "chatMessages"
+        );
+
+    try{
+
+        const res=
+        await fetch(
+            API_URL+
+            "?action=chat",
+            {
+                headers:{
+                    "X-Admin-Password":
+                    ADMIN_PASSWORD
+                }
+            }
+        );
+
+        const data=
+            await res.json();
+
+        if(!data.success)
+            throw new Error(
+                data.message ||
+                "Sohbet yüklenemedi."
+            );
+
+        const messages=
+            data.messages || [];
+
+
+        if(!messages.length){
+
+            box.innerHTML=
+            `<div class="chat-empty">
+                Henüz mesaj yok.
+            </div>`;
+
+            return;
+
+        }
+
+
+        box.innerHTML=
+        messages.map(m=>{
+
+            const textHtml=
+            m.message
+            ?
+            `<div>
+                ${escapeHtml(m.message)}
+            </div>`
+            :
+            "";
+
+
+            return `
+
+<div class="chat-msg">
+
+<div class="chat-name">
+${escapeHtml(
+m.sender ||
+"Bilinmiyor"
+)}
+</div>
+
+${textHtml}
+
+<div class="chat-message-footer">
+
+<div class="chat-time">
+${formatDate(
+m.created_at
+)}
+</div>
+
+<button
+class="chat-delete"
+onclick="deleteChatMessage(
+${Number(m.id)}
+)"
+>
+🗑️ Sil
+</button>
+
+</div>
+
+</div>
+
+`;
+
+        }).join("");
+
+
+        box.scrollTop=
+            box.scrollHeight;
+
+
+    }catch(err){
+
+        box.innerHTML=
+        `<div class="chat-empty">
+            ${escapeHtml(
+                err.message
+            )}
+        </div>`;
+
+    }
+
+}
+
 
 async function deleteChatMessage(id){
-  if(!confirm("Bu mesajı silmek istediğine emin misin?")) return;
-  try{
-    const res = await fetch(API_URL + "?action=delete-chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Admin-Password": ADMIN_PASSWORD },
-      body: JSON.stringify({ id })
-    });
-    const data = await res.json();
-    if(!data.success) throw new Error(data.message || "Mesaj silinemedi.");
-    await loadChat();
-  }catch(err){
-    alert("Mesaj silinemedi: " + err.message);
-  }
+
+    if(!confirm(
+        "Bu mesajı silmek istediğine emin misin?"
+    ))
+        return;
+
+
+    try{
+
+        const res=
+        await fetch(
+            API_URL+
+            "?action=delete-chat",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                    "application/json",
+
+                    "X-Admin-Password":
+                    ADMIN_PASSWORD
+                },
+
+                body:
+                JSON.stringify({id})
+            }
+        );
+
+
+        const data=
+        await res.json();
+
+
+        if(!data.success)
+            throw new Error(
+                data.message ||
+                "Mesaj silinemedi."
+            );
+
+
+        await loadChat();
+
+
+    }catch(err){
+
+        alert(
+            "Mesaj silinemedi: "+
+            err.message
+        );
+
+    }
+
 }
 
-document.getElementById("chatFile").addEventListener("change", function(){
-  document.getElementById("fileName").textContent = this.files[0] ? this.files[0].name : "";
+
+document
+.getElementById("chatForm")
+.addEventListener(
+"submit",
+async e=>{
+
+    e.preventDefault();
+
+    const sender=
+        document.getElementById(
+            "chatName"
+        ).value;
+
+    const input=
+        document.getElementById(
+            "chatText"
+        );
+
+    const message=
+        input.value.trim();
+
+
+    if(!sender){
+
+        alert(
+            "Önce kim olduğunu seç."
+        );
+
+        return;
+
+    }
+
+
+    if(!message){
+
+        alert(
+            "Mesaj yaz."
+        );
+
+        return;
+
+    }
+
+
+    const button=
+        e.target.querySelector(
+            "button[type=submit]"
+        );
+
+    button.disabled=true;
+    button.textContent=
+        "Gönderiliyor...";
+
+
+    try{
+
+        const res=
+        await fetch(
+            API_URL+
+            "?action=chat",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":
+                    "application/json",
+
+                    "X-Admin-Password":
+                    ADMIN_PASSWORD
+                },
+
+                body:
+                JSON.stringify({
+                    sender,
+                    message
+                })
+            }
+        );
+
+
+        const data=
+            await res.json();
+
+
+        if(!data.success)
+            throw new Error(
+                data.message ||
+                "Gönderilemedi."
+            );
+
+
+        input.value="";
+
+        await loadChat();
+
+        input.focus();
+
+
+    }catch(err){
+
+        alert(
+            "Gönderilemedi: "+
+            err.message
+        );
+
+    }finally{
+
+        button.disabled=false;
+        button.textContent=
+            "Gönder";
+
+    }
+
 });
 
-document.getElementById("chatForm").addEventListener("submit", async function(e){
-  e.preventDefault();
-  const sender = document.getElementById("chatName").value;
-  const input = document.getElementById("chatText");
-  const fileInput = document.getElementById("chatFile");
-  const message = input.value.trim();
-  const file = fileInput.files[0];
 
-  if(!sender){ alert("Önce kim olduğunu seç."); return; }
-  if(!message && !file){ alert("Mesaj yaz veya dosya seç."); return; }
-  if(file && file.size > 3 * 1024 * 1024){ alert("Dosya 3 MB'dan büyük olamaz."); return; }
+/* =========================
+   FILE MODAL
+========================= */
 
-  const button = this.querySelector("button[type='submit']");
-  button.disabled = true;
-  button.textContent = "Gönderiliyor...";
+const fileModal=
+document.getElementById(
+    "fileModal"
+);
 
-  try{
-    const form = new FormData();
-    form.append("sender", sender);
-    if(message) form.append("message", message);
-    if(file) form.append("file", file);
+document
+.getElementById("modalClose")
+.onclick=()=>{
 
-    const res = await fetch(API_URL + "?action=chat", {
-      method: "POST",
-      headers: { "X-Admin-Password": ADMIN_PASSWORD },
-      body: form
-    });
-    const data = await res.json();
-    if(!data.success) throw new Error(data.message || "Gönderilemedi.");
+    fileModal.classList.remove(
+        "open"
+    );
 
-    input.value = "";
-    fileInput.value = "";
-    document.getElementById("fileName").textContent = "";
-    await loadChat();
-    input.focus();
-  }catch(err){
-    alert("Gönderilemedi: " + err.message);
-  }finally{
-    button.disabled = false;
-    button.textContent = "Gönder";
-  }
+};
+
+
+fileModal.onclick=e=>{
+
+    if(e.target===fileModal)
+        fileModal.classList.remove(
+            "open"
+        );
+
+};
+
+
+/* =========================
+   ESCAPE
+========================= */
+
+document.addEventListener(
+"keydown",
+e=>{
+
+    if(e.key==="Escape"){
+
+        visitorPasswordModal
+            .classList.remove("open");
+
+        closeVisitors();
+
+        fileModal
+            .classList.remove("open");
+
+    }
+
 });
 
-setInterval(loadChat, 5000);
 
-if(sessionStorage.getItem("meet_admin") === "1"){
-  showDashboard();
+/* =========================
+   AUTO CHAT
+========================= */
+
+setInterval(
+    loadChat,
+    5000
+);
+
+
+/* =========================
+   SESSION
+========================= */
+
+if(
+    sessionStorage.getItem(
+        "meet_admin"
+    )==="1"
+){
+
+    showDashboard();
+
 }
+
 </script>
+
 </body>
 </html>
