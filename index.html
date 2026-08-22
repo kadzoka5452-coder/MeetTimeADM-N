@@ -4,25 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>MeetTime Yönetim</title>
-
 <style>
 *{
   box-sizing:border-box;
   margin:0;
   padding:0
 }
-
 body{
   font-family:Inter,Arial,sans-serif;
   background:#f6f6f8;
   color:#171717;
   min-height:100vh
 }
-
 button,input,select{
   font:inherit
 }
-
 /* LOGIN */
 .login{
   min-height:100vh;
@@ -30,7 +26,6 @@ button,input,select{
   place-items:center;
   padding:20px
 }
-
 .login-box{
   width:min(390px,100%);
   padding:34px;
@@ -39,7 +34,6 @@ button,input,select{
   border-radius:22px;
   box-shadow:0 20px 60px #0000000d
 }
-
 .logo{
   font-size:28px;
   font-weight:900;
@@ -47,20 +41,17 @@ button,input,select{
   -webkit-background-clip:text;
   color:transparent
 }
-
 .muted{
   color:#777;
   font-size:14px;
   margin:8px 0 24px
 }
-
 label{
   display:block;
   font-size:12px;
   font-weight:800;
   margin:0 0 7px
 }
-
 input{
   width:100%;
   padding:13px;
@@ -68,13 +59,11 @@ input{
   border-radius:10px;
   outline:0
 }
-
 input:focus,
 select:focus{
   border-color:#dd2a7b;
   box-shadow:0 0 0 3px #dd2a7b12
 }
-
 .btn{
   border:0;
   border-radius:10px;
@@ -82,26 +71,22 @@ select:focus{
   cursor:pointer;
   font-weight:800
 }
-
 .primary{
   width:100%;
   color:#fff;
   background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);
   margin-top:14px
 }
-
 .error{
   color:#c51f61;
   font-size:13px;
   margin-top:10px;
   display:none
 }
-
 /* DASHBOARD */
 .dashboard{
   display:none
 }
-
 header{
   background:#fff;
   border-bottom:1px solid #e7e7e7;
@@ -113,22 +98,18 @@ header{
   top:0;
   z-index:5
 }
-
 header h1{
   font-size:23px
 }
-
 .logout{
   background:#171717;
   color:#fff
 }
-
 main{
   max-width:1250px;
   margin:auto;
   padding:35px 20px
 }
-
 .top{
   display:flex;
   justify-content:space-between;
@@ -136,21 +117,17 @@ main{
   align-items:end;
   margin-bottom:22px
 }
-
 .top h2{
   font-size:30px
 }
-
 .actions{
   display:flex;
   gap:10px
 }
-
 .refresh{
   background:#fff;
   border:1px solid #ddd
 }
-
 /* STATS */
 .stats{
   display:grid;
@@ -158,25 +135,21 @@ main{
   gap:14px;
   margin-bottom:20px
 }
-
 .stat{
   background:#fff;
   border:1px solid #e7e7e7;
   border-radius:16px;
   padding:20px
 }
-
 .stat span{
   color:#777;
   font-size:12px
 }
-
 .stat b{
   display:block;
   font-size:28px;
   margin-top:5px
 }
-
 /* TABLE */
 .table-wrap{
   overflow:auto;
@@ -184,13 +157,11 @@ main{
   border:1px solid #e7e7e7;
   border-radius:18px
 }
-
 table{
   width:100%;
   border-collapse:collapse;
   min-width:1000px
 }
-
 th,td{
   text-align:left;
   padding:15px;
@@ -198,7 +169,6 @@ th,td{
   font-size:13px;
   vertical-align:top
 }
-
 th{
   font-size:11px;
   text-transform:uppercase;
@@ -206,18 +176,15 @@ th{
   color:#777;
   background:#fafafa
 }
-
 .reason{
   max-width:260px;
   color:#555
 }
-
 .empty{
   text-align:center;
   padding:50px;
   color:#777
 }
-
 /* STATUS */
 .status{
   display:inline-block;
@@ -228,24 +195,20 @@ th{
   font-size:11px;
   font-weight:800
 }
-
 .approved{
   background:#effaf3;
   color:#16803c
 }
-
 .rejected{
   background:#fff0ef;
   color:#b42318
 }
-
 /* APPLICATION BUTTONS */
 .row-actions{
   display:flex;
   gap:6px;
   flex-wrap:wrap
 }
-
 .small-btn{
   border:1px solid #ddd;
   background:#fff;
@@ -255,29 +218,24 @@ th{
   font-size:11px;
   font-weight:800
 }
-
 .small-btn:hover{
   background:#f7f7f7
 }
-
 .approve{
   color:#16803c;
   border-color:#bde5c9;
   background:#f2fff6
 }
-
 .reject{
   color:#b42318;
   border-color:#f1c0bb;
   background:#fff5f4
 }
-
 .delete{
   color:#b42318;
   border-color:#f1c0bb;
   background:#fff
 }
-
 /* NOTICE */
 .notice{
   margin:0 0 15px;
@@ -288,9 +246,8 @@ th{
   font-size:13px;
   display:none
 }
-
-/* CHAT */
-.chat-panel{
+/* FILES */
+.files-panel{
   margin-top:24px;
   background:#fff;
   border:1px solid #eee;
@@ -298,323 +255,272 @@ th{
   padding:18px;
   box-shadow:0 8px 25px rgba(0,0,0,.06)
 }
-
-.chat-panel h3{
+.files-panel h3{
   margin:0 0 4px
 }
-
-.chat-sub{
+.files-sub{
   margin:0 0 14px;
   color:#777;
   font-size:13px
 }
-
-.chat-messages{
-  height:280px;
-  overflow-y:auto;
-  background:#fafafa;
-  border:1px solid #eee;
-  border-radius:14px;
-  padding:14px;
+.files-upload{
   display:flex;
-  flex-direction:column;
-  gap:9px
-}
-
-.chat-msg{
-  max-width:78%;
-  padding:9px 12px;
-  border-radius:14px;
-  background:#f0f0f0;
-  align-self:flex-start;
-  word-break:break-word
-}
-
-.chat-name{
-  font-size:11px;
-  font-weight:800;
-  color:#7b3fb5;
-  margin-bottom:3px
-}
-
-.chat-time{
-  font-size:9px;
-  color:#999
-}
-
-.chat-message-footer{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
   gap:10px;
-  margin-top:5px
+  flex-wrap:wrap;
+  align-items:center;
+  margin-bottom:16px;
+  padding:14px;
+  background:#fafafa;
+  border:1px dashed #ddd;
+  border-radius:14px
 }
-
-.chat-delete{
-  border:0;
-  background:transparent;
-  color:#b42318;
-  font-size:10px;
-  cursor:pointer;
-  font-weight:800;
-  padding:3px 6px;
-  border-radius:5px
-}
-
-.chat-delete:hover{
-  background:#fff0ef
-}
-
-.chat-form{
-  display:flex;
-  gap:8px;
-  margin-top:10px
-}
-
-.chat-form select,
-.chat-form input{
+.files-upload input[type="file"]{
+  flex:1;
+  min-width:200px;
+  padding:10px;
   border:1px solid #ddd;
   border-radius:10px;
-  padding:11px;
   background:#fff
 }
-
-.chat-form select{
-  width:150px
+.files-upload .uploader{
+  min-width:120px
 }
-
-.chat-form input{
-  flex:1
-}
-
-.chat-form button{
+.files-upload button{
   border:0;
   border-radius:10px;
-  padding:0 16px;
+  padding:12px 18px;
   background:#7b3fb5;
   color:#fff;
   font-weight:800;
   cursor:pointer
 }
-
-.chat-form button:disabled{
+.files-upload button:disabled{
   opacity:.6;
   cursor:not-allowed
 }
-
-.chat-empty{
+.files-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:12px
+}
+.file-card{
+  border:1px solid #eee;
+  border-radius:14px;
+  padding:12px;
+  background:#fafafa;
+  display:flex;
+  flex-direction:column;
+  gap:8px
+}
+.file-card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:10px;
+  background:#eee
+}
+.file-card .file-icon{
+  width:100%;
+  height:140px;
+  display:grid;
+  place-items:center;
+  background:#f0f0f0;
+  border-radius:10px;
+  font-size:42px
+}
+.file-meta{
+  font-size:12px
+}
+.file-name{
+  font-weight:800;
+  word-break:break-all;
+  margin-bottom:2px
+}
+.file-info{
+  color:#777;
+  font-size:11px
+}
+.file-actions{
+  display:flex;
+  gap:6px;
+  margin-top:4px
+}
+.file-actions a,
+.file-actions button{
+  flex:1;
+  text-align:center;
+  border:1px solid #ddd;
+  background:#fff;
+  border-radius:8px;
+  padding:7px 8px;
+  font-size:11px;
+  font-weight:800;
+  cursor:pointer;
+  text-decoration:none;
+  color:#171717
+}
+.file-actions a:hover,
+.file-actions button:hover{
+  background:#f7f7f7
+}
+.file-actions .del{
+  color:#b42318;
+  border-color:#f1c0bb
+}
+.files-empty{
   text-align:center;
   color:#999;
-  padding:80px 10px 0;
-  font-size:13px
+  padding:40px 10px;
+  font-size:13px;
+  grid-column:1 / -1
 }
-
+.upload-progress{
+  display:none;
+  margin-top:8px;
+  font-size:12px;
+  color:#7b3fb5;
+  font-weight:700
+}
 /* MOBILE */
 @media(max-width:700px){
-
   .stats{
     grid-template-columns:1fr
   }
-
   .top{
     align-items:stretch;
     flex-direction:column
   }
-
   .actions{
     width:100%
   }
-
   .actions button{
     flex:1
   }
-
-  .chat-form{
+  .files-upload{
     flex-direction:column
   }
-
-  .chat-form select{
+  .files-upload input[type="file"],
+  .files-upload .uploader,
+  .files-upload button{
     width:100%
-  }
-
-  .chat-form button{
-    min-height:45px
-  }
-
-  .chat-msg{
-    max-width:90%
   }
 }
 </style>
-
 <link
 rel="icon"
 type="image/svg+xml"
 href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23f58529'/%3E%3Cstop offset='45%25' stop-color='%23dd2a7b'/%3E%3Cstop offset='100%25' stop-color='%238134af'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='28' fill='url(%23g)'/%3E%3Crect x='23' y='23' width='54' height='54' rx='17' fill='none' stroke='white' stroke-width='7'/%3E%3Ccircle cx='50' cy='50' r='13' fill='none' stroke='white' stroke-width='7'/%3E%3Ccircle cx='68' cy='32' r='5' fill='white'/%3E%3C/svg%3E"
 >
 </head>
-
 <body>
-
 <!-- LOGIN -->
 <section class="login" id="login">
-
   <div class="login-box">
-
     <div class="logo">MeetTime</div>
-
     <h2 style="margin-top:8px">
       Yönetim Paneli
     </h2>
-
     <p class="muted">
       Başvuruları görüntülemek için yönetici şifresini gir.
     </p>
-
     <label for="password">
       Yönetici şifresi
     </label>
-
     <input
       id="password"
       type="password"
       placeholder="Şifre"
     >
-
     <button
       class="btn primary"
       id="loginBtn"
     >
       Panele Gir
     </button>
-
     <div
       class="error"
       id="loginError"
     >
       Şifre yanlış.
     </div>
-
   </div>
-
 </section>
-
-
 <!-- DASHBOARD -->
 <section
 class="dashboard"
 id="dashboard"
 >
-
 <header>
-
   <h1>
     MeetTime
     <span style="color:#dd2a7b">
       Yönetim
     </span>
   </h1>
-
   <button
   class="btn logout"
   id="logout"
   >
     Çıkış
   </button>
-
 </header>
-
-
 <main>
-
   <div class="top">
-
     <div>
-
       <h2>
         Başvurular
       </h2>
-
       <p
       class="muted"
       style="margin:4px 0 0"
       >
         MeetTime başvuruları
       </p>
-
     </div>
-
     <div class="actions">
-
       <button
       class="btn refresh"
       id="refresh"
       >
         ↻ Yenile
       </button>
-
     </div>
-
   </div>
-
-
   <div
   class="notice"
   id="notice"
   ></div>
-
-
   <!-- STATS -->
   <div class="stats">
-
     <div class="stat">
-
       <span>
         Toplam başvuru
       </span>
-
       <b id="total">
         0
       </b>
-
     </div>
-
-
     <div class="stat">
-
       <span>
         Bugünkü başvuru
       </span>
-
       <b id="today">
         0
       </b>
-
     </div>
-
-
     <div class="stat">
-
       <span>
         Son başvuru
       </span>
-
       <b id="latest">
         —
       </b>
-
     </div>
-
   </div>
-
-
   <!-- APPLICATION TABLE -->
   <div class="table-wrap">
-
     <table>
-
       <thead>
-
         <tr>
           <th>Sıra</th>
           <th>Kiminle?</th>
@@ -627,272 +533,147 @@ id="dashboard"
           <th>Durum</th>
           <th>İşlem</th>
         </tr>
-
       </thead>
-
-
       <tbody id="rows">
-
         <tr>
-
           <td
           colspan="10"
           class="empty"
           >
             Başvurular yükleniyor...
           </td>
-
         </tr>
-
       </tbody>
-
     </table>
-
   </div>
-
-
-  <!-- CHAT -->
-  <section class="chat-panel">
-
+  <!-- FILES -->
+  <section class="files-panel">
     <h3>
-      💬 Ortak Sohbet
+      📁 Dosyalar
     </h3>
-
-    <p class="chat-sub">
-      Kontrol panelindeki ortak sohbet —
-      mesaj göndermeden önce kim olduğunu seç.
+    <p class="files-sub">
+      Belge veya fotoğraf yükle. Desteklenen: JPG, PNG, WEBP, PDF, DOC, DOCX (max 3 MB).
     </p>
-
-
-    <div
-    id="chatMessages"
-    class="chat-messages"
-    >
-
-      <div class="chat-empty">
-        Henüz mesaj yok.
-      </div>
-
-    </div>
-
-
-    <form
-    id="chatForm"
-    class="chat-form"
-    >
-
-      <select
-      id="chatName"
-      required
-      >
-
-        <option value="">
-          Kim yazıyor?
-        </option>
-
-        <option value="Kadir">
-          Kadir
-        </option>
-
-        <option value="Arslan">
-          Arslan
-        </option>
-
+    <div class="files-upload">
+      <select id="fileUploader" class="uploader" required>
+        <option value="">Kim yüklüyor?</option>
+        <option value="Kadir">Kadir</option>
+        <option value="Arslan">Arslan</option>
       </select>
-
-
       <input
-      id="chatText"
-      type="text"
-      maxlength="500"
-      placeholder="Mesaj yaz..."
-      autocomplete="off"
-      required
+        type="file"
+        id="fileInput"
+        accept="image/jpeg,image/png,image/webp,application/pdf,.doc,.docx"
       >
-
-
-      <button
-      type="submit"
-      >
-        Gönder
-      </button>
-
-    </form>
-
+      <button type="button" id="uploadBtn">Yükle</button>
+    </div>
+    <div class="upload-progress" id="uploadProgress">Yükleniyor...</div>
+    <div id="filesList" class="files-list">
+      <div class="files-empty">Henüz dosya yok.</div>
+    </div>
   </section>
-
 </main>
-
 </section>
-
-
 <script>
-
 /* =====================================================
    AYARLAR
 ===================================================== */
-
 const ADMIN_PASSWORD = "sex";
-
 const API_URL =
 "https://meetime-api.kadzoka5452.workers.dev";
-
-const CHAT_API = API_URL;
-
-
 /* =====================================================
    ELEMENTLER
 ===================================================== */
-
 const login =
 document.getElementById("login");
-
 const dashboard =
 document.getElementById("dashboard");
-
 const password =
 document.getElementById("password");
-
 const loginBtn =
 document.getElementById("loginBtn");
-
 const loginError =
 document.getElementById("loginError");
-
 const rows =
 document.getElementById("rows");
-
 const notice =
 document.getElementById("notice");
-
-
 /* =====================================================
    ESCAPE HTML
 ===================================================== */
-
 function escapeHtml(v){
-
   return String(v ?? "").replace(
     /[&<>"']/g,
     function(m){
-
       return {
-
         "&":"&amp;",
         "<":"&lt;",
         ">":"&gt;",
         '"':"&quot;",
         "'":"&#039;"
-
       }[m];
-
     }
   );
-
 }
-
-
 /* =====================================================
    LOGIN
 ===================================================== */
-
 function showDashboard(){
-
   login.style.display="none";
-
   dashboard.style.display="block";
-
   loadApplications();
-
-  loadChat();
-
+  loadFiles();
 }
-
-
 function showError(msg){
-
   loginError.textContent=msg;
-
   loginError.style.display="block";
-
 }
-
-
 loginBtn.onclick=function(){
-
   if(password.value===ADMIN_PASSWORD){
-
     sessionStorage.setItem(
       "meet_admin",
       "1"
     );
-
     showDashboard();
-
   }else{
-
     showError(
       "Şifre yanlış."
     );
-
   }
-
 };
-
-
 password.addEventListener(
 "keydown",
 function(e){
-
   if(e.key==="Enter"){
     loginBtn.click();
   }
-
 });
-
-
 document
 .getElementById("logout")
 .onclick=function(){
-
   sessionStorage.removeItem(
     "meet_admin"
   );
-
   location.reload();
-
 };
-
-
 document
 .getElementById("refresh")
 .onclick=function(){
-
   loadApplications();
-
-  loadChat();
-
+  loadFiles();
 };
-
-
 /* =====================================================
    BAŞVURULAR
 ===================================================== */
-
 async function loadApplications(){
-
   notice.style.display="none";
-
   rows.innerHTML=
   '<tr>' +
   '<td colspan="10" class="empty">' +
   'Başvurular yükleniyor...' +
   '</td>' +
   '</tr>';
-
-
   try{
-
     const response =
     await fetch(
       API_URL+"?action=applications",
@@ -903,61 +684,40 @@ async function loadApplications(){
         }
       }
     );
-
-
     const data =
     await response.json();
-
-
     if(!data.success){
-
       throw new Error(
         data.message ||
         "Başvurular alınamadı."
       );
-
     }
-
-
     const apps =
     data.applications || [];
-
-
     document.getElementById(
       "total"
     ).textContent=
     apps.length;
-
-
     const todayKey =
     new Date().toLocaleDateString(
       "tr-TR"
     );
-
-
     const todayApps =
     apps.filter(function(a){
-
       const d =
       new Date(
         Number(a.created_at)
       );
-
       return (
         d.toLocaleDateString(
           "tr-TR"
         ) === todayKey
       );
-
     });
-
-
     document.getElementById(
       "today"
     ).textContent=
     todayApps.length;
-
-
     document.getElementById(
       "latest"
     ).textContent=
@@ -976,29 +736,19 @@ async function loadApplications(){
     )
     :
     "—";
-
-
     if(!apps.length){
-
       rows.innerHTML=
       '<tr>' +
       '<td colspan="10" class="empty">' +
       'Henüz başvuru yok.' +
       '</td>' +
       '</tr>';
-
       return;
-
     }
-
-
     rows.innerHTML =
     apps.map(function(a,i){
-
       return `
-
       <tr>
-
         <td>
           <strong>
             ${escapeHtml(
@@ -1008,97 +758,67 @@ async function loadApplications(){
             )}
           </strong>
         </td>
-
-
         <td>
-
           <span class="status">
-
             ${escapeHtml(
               a.person ||
               a.withWhom ||
               "—"
             )}
-
           </span>
-
         </td>
-
-
         <td>
-
           <strong>
             ${escapeHtml(
               a.name ||
               "—"
             )}
           </strong>
-
         </td>
-
-
         <td>
           ${escapeHtml(
             a.day ||
             "—"
           )}
         </td>
-
-
         <td>
           ${escapeHtml(
             a.time ||
             "—"
           )}
         </td>
-
-
         <td class="reason">
           ${escapeHtml(
             a.reason ||
             "—"
           )}
         </td>
-
-
         <td>
           ${escapeHtml(
             a.contact ||
             "—"
           )}
         </td>
-
-
         <td>
           ${formatDate(
             a.created_at
           )}
         </td>
-
-
         <td>
-
           <span
           class="status ${statusClass(
             a.status
           )}"
           >
-
             ${escapeHtml(
               statusText(
                 a.status
               )
             )}
-
           </span>
-
         </td>
-
-
         <td>
-
           <div class="row-actions">
-
             <button
             class="small-btn approve"
             onclick="changeStatus(
@@ -1108,8 +828,6 @@ async function loadApplications(){
             >
               Onayla
             </button>
-
-
             <button
             class="small-btn reject"
             onclick="changeStatus(
@@ -1119,8 +837,6 @@ async function loadApplications(){
             >
               Reddet
             </button>
-
-
             <button
             class="small-btn delete"
             onclick="deleteApplication(
@@ -1129,159 +845,101 @@ async function loadApplications(){
             >
               Sil
             </button>
-
           </div>
-
         </td>
-
       </tr>
-
       `;
-
     }).join("");
-
-
   }catch(err){
-
     console.error(
       "Başvuru hatası:",
       err
     );
-
-
     rows.innerHTML=
     '<tr>' +
     '<td colspan="10" class="empty">' +
     'Başvurular alınamadı.' +
     '</td>' +
     '</tr>';
-
-
     notice.textContent =
     err.message;
-
-
     notice.style.display=
     "block";
-
   }
-
 }
-
-
 /* =====================================================
    DURUM
 ===================================================== */
-
 function statusText(v){
-
   if(v==="approved")
     return "Onaylandı";
-
   if(v==="rejected")
     return "Reddedildi";
-
   return "İnceleniyor";
-
 }
-
-
 function statusClass(v){
-
   if(v==="approved")
     return "approved";
-
   if(v==="rejected")
     return "rejected";
-
   return "";
-
 }
-
-
 /* =====================================================
    ADMIN ACTION
 ===================================================== */
-
 async function adminAction(
 action,
 id
 ){
-
   const response =
   await fetch(
     API_URL+
     "?action="+
     encodeURIComponent(action),
     {
-
       method:"POST",
-
       headers:{
         "Content-Type":
         "application/json",
-
         "X-Admin-Password":
         ADMIN_PASSWORD
       },
-
       body:JSON.stringify({
         id:id
       })
-
     }
   );
-
-
   const data =
   await response.json();
-
-
   if(!data.success){
-
     throw new Error(
       data.message ||
       "İşlem başarısız."
     );
-
   }
-
-
   return data;
-
 }
-
-
 /* =====================================================
    ONAY / RED
 ===================================================== */
-
 async function changeStatus(
 id,
 status
 ){
-
   const label =
   status==="approved"
   ?
   "onaylamak"
   :
   "reddetmek";
-
-
   if(!confirm(
     "Bu başvuruyu "+
     label+
     " istediğine emin misin?"
   )){
-
     return;
-
   }
-
-
   try{
-
     await adminAction(
       status==="approved"
       ?
@@ -1290,77 +948,46 @@ status
       "reject",
       id
     );
-
-
     await loadApplications();
-
-
   }catch(err){
-
     alert(
       err.message
     );
-
   }
-
 }
-
-
 /* =====================================================
    BAŞVURU SİL
 ===================================================== */
-
 async function deleteApplication(
 id
 ){
-
   if(!confirm(
     "Bu başvuruyu kalıcı olarak silmek istediğine emin misin?"
   )){
-
     return;
-
   }
-
-
   try{
-
     await adminAction(
       "delete",
       id
     );
-
-
     await loadApplications();
-
-
   }catch(err){
-
     alert(
       err.message
     );
-
   }
-
 }
-
-
 /* =====================================================
    TARİH
 ===================================================== */
-
 function formatDate(v){
-
   const d =
   new Date(
     Number(v)
   );
-
-
   if(isNaN(d))
     return "—";
-
-
   return d.toLocaleString(
     "tr-TR",
     {
@@ -1368,399 +995,176 @@ function formatDate(v){
       timeStyle:"short"
     }
   );
-
 }
-
-
 /* =====================================================
-   CHAT MESAJLARINI GETİR
+   DOSYA BOYUTU
 ===================================================== */
-
-async function loadChat(){
-
-  const box =
-  document.getElementById(
-    "chatMessages"
-  );
-
-
-  if(!box)
-    return;
-
-
+function formatSize(bytes){
+  if(!bytes && bytes !== 0) return "—";
+  if(bytes < 1024) return bytes + " B";
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(1) + " KB";
+  return (bytes/(1024*1024)).toFixed(1) + " MB";
+}
+/* =====================================================
+   DOSYALARI GETİR
+===================================================== */
+async function loadFiles(){
+  const box = document.getElementById("filesList");
+  if(!box) return;
   try{
-
-    const res =
-    await fetch(
-      CHAT_API+
-      "?action=chat",
+    const res = await fetch(
+      API_URL + "?action=files",
       {
         headers:{
-          "X-Admin-Password":
-          ADMIN_PASSWORD
+          "X-Admin-Password": ADMIN_PASSWORD
         }
       }
     );
-
-
-    const data =
-    await res.json();
-
-
+    const data = await res.json();
     if(!data.success){
-
-      throw new Error(
-        data.message ||
-        "Sohbet yüklenemedi."
-      );
-
+      throw new Error(data.message || "Dosyalar yüklenemedi.");
     }
-
-
-    const messages =
-    data.messages || [];
-
-
-    if(!messages.length){
-
-      box.innerHTML=
-      '<div class="chat-empty">' +
-      'Henüz mesaj yok.' +
-      '</div>';
-
+    const files = data.files || [];
+    if(!files.length){
+      box.innerHTML = '<div class="files-empty">Henüz dosya yok.</div>';
       return;
-
     }
-
-
-    box.innerHTML =
-    messages.map(function(m){
-
+    box.innerHTML = files.map(function(f){
+      const isImage = (f.mime || f.type || "").startsWith("image/");
+      const url = f.url || (API_URL + "?action=file&id=" + f.id);
+      const preview = isImage
+        ? `<img src="${escapeHtml(url)}" alt="${escapeHtml(f.name || "dosya")}" loading="lazy">`
+        : `<div class="file-icon">${getFileEmoji(f.mime || f.name)}</div>`;
       return `
-
-      <div class="chat-msg">
-
-        <div class="chat-name">
-
-          ${escapeHtml(
-            m.sender ||
-            "Bilinmiyor"
-          )}
-
-        </div>
-
-
-        <div>
-
-          ${escapeHtml(
-            m.message ||
-            ""
-          )}
-
-        </div>
-
-
-        <div class="chat-message-footer">
-
-          <div class="chat-time">
-
-            ${formatDate(
-              m.created_at
-            )}
-
+      <div class="file-card">
+        ${preview}
+        <div class="file-meta">
+          <div class="file-name">${escapeHtml(f.name || "dosya")}</div>
+          <div class="file-info">
+            ${escapeHtml(f.uploader || "—")} · ${formatSize(f.size)} · ${formatDate(f.created_at)}
           </div>
-
-
-          <button
-          type="button"
-          class="chat-delete"
-          onclick="deleteChatMessage(
-            ${Number(m.id)}
-          )"
-          >
-            🗑️ Sil
-          </button>
-
         </div>
-
+        <div class="file-actions">
+          <a href="${escapeHtml(url)}" target="_blank" rel="noopener">Aç</a>
+          <button type="button" class="del" onclick="deleteFile(${Number(f.id)})">Sil</button>
+        </div>
       </div>
-
       `;
-
     }).join("");
-
-
-    box.scrollTop =
-    box.scrollHeight;
-
-
   }catch(err){
-
-    console.error(
-      "Sohbet yükleme hatası:",
-      err
-    );
-
-
-    box.innerHTML=
-    '<div class="chat-empty">' +
-    escapeHtml(
-      err.message
-    ) +
-    '</div>';
-
+    console.error("Dosya yükleme hatası:", err);
+    box.innerHTML = '<div class="files-empty">' + escapeHtml(err.message) + '</div>';
   }
-
 }
-
-
+function getFileEmoji(mimeOrName){
+  const s = String(mimeOrName || "").toLowerCase();
+  if(s.includes("pdf")) return "📄";
+  if(s.includes("doc")) return "📝";
+  if(s.includes("image") || s.match(/\.(jpe?g|png|webp|gif)$/)) return "🖼️";
+  return "📎";
+}
 /* =====================================================
-   CHAT MESAJ SİL
+   DOSYA SİL
 ===================================================== */
-
-async function deleteChatMessage(
-id
-){
-
-  if(!confirm(
-    "Bu mesajı silmek istediğine emin misin?"
-  )){
-
+async function deleteFile(id){
+  if(!confirm("Bu dosyayı silmek istediğine emin misin?")){
     return;
-
   }
-
-
   try{
-
-    const res =
-    await fetch(
-      CHAT_API+
-      "?action=delete-chat",
+    const res = await fetch(
+      API_URL + "?action=delete-file",
       {
-
         method:"POST",
-
         headers:{
-
-          "Content-Type":
-          "application/json",
-
-          "X-Admin-Password":
-          ADMIN_PASSWORD
-
+          "Content-Type":"application/json",
+          "X-Admin-Password": ADMIN_PASSWORD
         },
-
-        body:JSON.stringify({
-          id:id
-        })
-
+        body: JSON.stringify({ id: id })
       }
     );
-
-
-    const data =
-    await res.json();
-
-
+    const data = await res.json();
     if(!data.success){
-
-      throw new Error(
-        data.message ||
-        "Mesaj silinemedi."
-      );
-
+      throw new Error(data.message || "Dosya silinemedi.");
     }
-
-
-    await loadChat();
-
-
+    await loadFiles();
   }catch(err){
-
-    console.error(
-      "Mesaj silme hatası:",
-      err
-    );
-
-
-    alert(
-      "Mesaj silinemedi: "+
-      err.message
-    );
-
+    console.error("Dosya silme hatası:", err);
+    alert("Dosya silinemedi: " + err.message);
   }
-
 }
-
-
 /* =====================================================
-   CHAT MESAJ GÖNDER
+   DOSYA YÜKLE
 ===================================================== */
+document.getElementById("uploadBtn").addEventListener("click", async function(){
+  const uploader = document.getElementById("fileUploader").value;
+  const input = document.getElementById("fileInput");
+  const file = input.files[0];
+  const progress = document.getElementById("uploadProgress");
+  const btn = this;
 
-document
-.getElementById("chatForm")
-.addEventListener(
-"submit",
-async function(e){
-
-  e.preventDefault();
-
-  e.stopPropagation();
-
-
-  const sender =
-  document.getElementById(
-    "chatName"
-  ).value;
-
-
-  const input =
-  document.getElementById(
-    "chatText"
-  );
-
-
-  const message =
-  input.value.trim();
-
-
-  if(!sender){
-
-    alert(
-      "Önce kim olduğunu seç."
-    );
-
+  if(!uploader){
+    alert("Önce kim yüklüyor seç.");
     return;
-
+  }
+  if(!file){
+    alert("Dosya seç.");
+    return;
+  }
+  // max 3 MB (D1 limiti)
+  if(file.size > 3 * 1024 * 1024){
+    alert("Dosya 3 MB'dan büyük olamaz.");
+    return;
   }
 
+  const form = new FormData();
+  form.append("file", file);
+  form.append("uploader", uploader);
 
-  if(!message)
-    return;
-
-
-  const button =
-  this.querySelector(
-    "button"
-  );
-
-
-  button.disabled=
-  true;
-
-
-  button.textContent=
-  "Gönderiliyor...";
-
+  btn.disabled = true;
+  btn.textContent = "Yükleniyor...";
+  progress.style.display = "block";
+  progress.textContent = "Yükleniyor... (" + formatSize(file.size) + ")";
 
   try{
-
-    const res =
-    await fetch(
-      CHAT_API+
-      "?action=chat",
+    const res = await fetch(
+      API_URL + "?action=upload",
       {
-
-        method:"POST",
-
-        headers:{
-
-          "Content-Type":
-          "application/json",
-
-          "X-Admin-Password":
-          ADMIN_PASSWORD
-
+        method: "POST",
+        headers: {
+          "X-Admin-Password": ADMIN_PASSWORD
         },
-
-        body:JSON.stringify({
-
-          sender:sender,
-
-          message:message
-
-        })
-
+        body: form
       }
     );
-
-
-    const data =
-    await res.json();
-
-
+    const data = await res.json();
     if(!data.success){
-
-      throw new Error(
-        data.message ||
-        "Mesaj gönderilemedi."
-      );
-
+      throw new Error(data.message || "Yükleme başarısız.");
     }
-
-
-    input.value="";
-
-
-    await loadChat();
-
-
-    input.focus();
-
-
+    input.value = "";
+    progress.textContent = "Yüklendi ✓";
+    await loadFiles();
+    setTimeout(function(){
+      progress.style.display = "none";
+    }, 1500);
   }catch(err){
-
-    console.error(
-      "Mesaj gönderme hatası:",
-      err
-    );
-
-
-    alert(
-      "Mesaj gönderilemedi: "+
-      err.message
-    );
-
-
+    console.error("Yükleme hatası:", err);
+    alert("Yükleme başarısız: " + err.message);
+    progress.style.display = "none";
   }finally{
-
-    button.disabled=
-    false;
-
-    button.textContent=
-    "Gönder";
-
+    btn.disabled = false;
+    btn.textContent = "Yükle";
   }
-
 });
-
-
-/* =====================================================
-   OTOMATİK SOHBET YENİLEME
-===================================================== */
-
-setInterval(
-  loadChat,
-  5000
-);
-
-
 /* =====================================================
    SESSION
 ===================================================== */
-
 if(
 sessionStorage.getItem(
   "meet_admin"
 )==="1"
 ){
-
   showDashboard();
-
 }
-
 </script>
-
 </body>
 </html>
